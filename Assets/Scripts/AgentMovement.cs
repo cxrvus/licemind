@@ -10,6 +10,7 @@ public class AgentMovement : MonoBehaviour
 
 	public bool isPlayer;
 	public float speed;
+	const float SPEED_FACTOR = 1000;
 
     // Update is called once per frame
     void Update()
@@ -17,7 +18,7 @@ public class AgentMovement : MonoBehaviour
 		float x = Input.GetAxis("Horizontal");
 		float y = Input.GetAxis("Vertical");
 		Vector3 direction = new Vector3(x, y, 0).normalized;
-		Transform transform = gameObject.GetComponent<Transform>();
-		transform.position += this.speed * Time.deltaTime * direction;
+		Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+		rb.velocity = this.speed * SPEED_FACTOR * Time.deltaTime * direction;
     }
 }
