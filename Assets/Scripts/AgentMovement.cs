@@ -10,15 +10,19 @@ public class AgentMovement : MonoBehaviour
 
 	public bool isPlayer;
 	public float speed;
-	const float SPEED_FACTOR = 1000;
+	const float SPEED_FACTOR = 100;
 
     // Update is called once per frame
-    void Update()
-    {
-		float x = Input.GetAxis("Horizontal");
-		float y = Input.GetAxis("Vertical");
-		Vector3 direction = new Vector3(x, y, 0).normalized;
-		Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-		rb.velocity = this.speed * SPEED_FACTOR * Time.deltaTime * direction;
-    }
+	void FixedUpdate()
+	{
+		Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
+		Rigidbody2D rb = GetComponent<Rigidbody2D>();
+		rb.velocity = speed * SPEED_FACTOR * Time.deltaTime * direction;
+
+		if (direction.magnitude > 0)
+		{
+			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+			transform.rotation = Quaternion.Euler(0, 0, angle);
+		}
+	}
 }
