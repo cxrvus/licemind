@@ -9,6 +9,7 @@ public class AgentMovement : MonoBehaviour
     }
 
 	public bool isPlayer;
+	public float speed;
 
     // Update is called once per frame
     void Update()
@@ -16,6 +17,7 @@ public class AgentMovement : MonoBehaviour
 		float x = Input.GetAxis("Horizontal");
 		float y = Input.GetAxis("Vertical");
 		Vector3 direction = new Vector3(x, y, 0).normalized;
-		var t = gameObject.GetComponent<Transform>().position += direction * Time.deltaTime;
+		Transform transform = gameObject.GetComponent<Transform>();
+		transform.position += this.speed * Time.deltaTime * direction;
     }
 }
