@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 230190008}
   - component: {fileID: 230190007}
   m_Layer: 0
-  m_Name: main sprite
+  m_Name: MainSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 868685017}
   - component: {fileID: 868685016}
   m_Layer: 0
-  m_Name: louse
+  m_Name: Louse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,12 +568,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1769923587006817330, guid: 8b7052c2a4944d4ad9980f140d203c93, type: 3}
       propertyPath: m_Name
-      value: hair
+      value: Hair
       objectReference: {fileID: 0}
     - target: {fileID: 8310138327075025259, guid: 8b7052c2a4944d4ad9980f140d203c93, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 28e4fa5b24be9587d8416645c7ae8c1e, type: 3}
+    - target: {fileID: 8310138327075025259, guid: 8b7052c2a4944d4ad9980f140d203c93, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
