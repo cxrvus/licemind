@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class Interactive : MonoBehaviour
 {
+	SpriteRenderer sprite;
+
 	void Start()
 	{
-		var noCollider = !TryGetComponent<Collider2D>(out _);
+		TryGetComponent(out sprite);
 
-		if (noCollider) { 
-			Debug.LogError("Interactives require the following components: Collider2D");
+		var noAnimator = !TryGetComponent<Animator>(out _);
+		var noCollider = !TryGetComponent<Collider2D>(out _);
+		var noSprite = !sprite;
+
+		if (noAnimator || noCollider || noSprite) { 
+			Debug.LogError("Interactives require the following components: Animator, Collider2D, SpriteRenderer");
 			Destroy(gameObject);
 			return;
 		}
     }
 
 	public void InteractionHover(bool hover) {
-		Debug.Log($"hovering: {hover}");
+		sprite.enabled = hover;
 	}
 }
