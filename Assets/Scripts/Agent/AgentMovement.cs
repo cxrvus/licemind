@@ -3,7 +3,7 @@ using UnityEngine;
 public class AgentMovement : MonoBehaviour
 {
 	public Vector3 Direction { get; private set; }
-	public bool IsMoving { get { return Direction.magnitude > 0; } }
+	public bool IsMoving { get { return Direction.sqrMagnitude > 0; } }
 
 	public bool isPlayer;
 	public float speed;
