@@ -59,7 +59,7 @@ public class Interactor : MonoBehaviour
 		}
 		else
 		{
-			interactive.InteractionHover(false);
+			interactive.HoverStop();
 			interactives.Remove(interactive);
 		}
 
@@ -68,7 +68,7 @@ public class Interactor : MonoBehaviour
 		ClosestInteractive = interactives.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
 		var otherInteractives = interactives.Where(x => x != ClosestInteractive).ToList();
 
-		if (ClosestInteractive) ClosestInteractive.InteractionHover(true);
-		otherInteractives.ForEach(x => x.InteractionHover(false));
+		if (ClosestInteractive) ClosestInteractive.HoverStart();
+		otherInteractives.ForEach(x => x.HoverStop());
 	}
 }

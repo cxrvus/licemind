@@ -21,9 +21,8 @@ public abstract class Interactive : MonoBehaviour
 		}
     }
 
-	public void InteractionHover(bool hover) {
-		sprite.enabled = hover;
-	}
+	public void HoverStart() => sprite.enabled = true;
+	public void HoverStop() => sprite.enabled = false;
 
 	public abstract void Interact();
 }
