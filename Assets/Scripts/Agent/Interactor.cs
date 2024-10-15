@@ -23,7 +23,7 @@ public class Interactor : MonoBehaviour
 		for(;;)
 		{
 			bool interactionKeyPressed = Input.GetKey(KeyCode.E);
-			if(IsTargeting && interactionKeyPressed) 
+			if(IsTargeting && interactionKeyPressed && nearestTarget) 
 			{
 				StartInteraction();
 				yield return new WaitForSeconds(1);
