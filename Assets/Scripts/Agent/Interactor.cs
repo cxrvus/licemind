@@ -24,7 +24,7 @@ public class Interactor : MonoBehaviour
 		for(;;)
 		{
 			bool interactionKeyPressed = Input.GetKey(KeyCode.E);
-			if(agent.isPlayer && IsTargeting && interactionKeyPressed) 
+			if(IsTargeting && interactionKeyPressed) 
 			{
 				StartInteraction();
 				yield return new WaitForSeconds(1);
@@ -69,8 +69,8 @@ public class Interactor : MonoBehaviour
 		}
 		else
 		{
-			interactive.HidePrompt();
 			targets.Remove(interactive);
+			if (agent.isPlayer) interactive.HidePrompt();
 		}
 
 		if (!IsTargeting) return;
@@ -78,7 +78,10 @@ public class Interactor : MonoBehaviour
 		NearestTarget = targets.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
 		var otherInteractives = targets.Where(x => x != NearestTarget).ToList();
 
-		if (NearestTarget) NearestTarget.ShowPrompt();
-		otherInteractives.ForEach(x => x.HidePrompt());
+		if (agent.isPlayer)
+		{
+			if (NearestTarget) NearestTarget.ShowPrompt();
+			otherInteractives.ForEach(x => x.HidePrompt());
+		}
 	}
 }
