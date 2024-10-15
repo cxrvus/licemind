@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class AgentMovement : MonoBehaviour
 {
-	const float SPEED_FACTOR = 100;
+	const float BASE_SPEED = 100;
 	public Vector3 direction;
 	public bool IsMoving { get { return direction.sqrMagnitude > 0; } }
+	bool movementFrozen;
 
 	Agent agent;
 	Animator animator;
@@ -14,14 +15,21 @@ public class AgentMovement : MonoBehaviour
 		agent = GetComponent<Agent>();
 		animator = GetComponent<Animator>();
 
-		if(!agent || !animator) { throw new MissingComponentException(); }
+		var interactor = GetComponentInChildren<Interactor>();
+
+		if(!agent || !animator || !interactor) { throw new MissingComponentException(); }
+
+		interactor.OnInteractionStart += Freeze;
+		interactor.OnInteractionStop += Unfreeze;
 	}
 
 	void FixedUpdate()
 	{
+		if (movementFrozen) return;
+
 		direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
 		Rigidbody2D rb = GetComponent<Rigidbody2D>();
-		rb.velocity = agent.speed * SPEED_FACTOR * Time.deltaTime * direction;
+		rb.velocity = agent.speed * BASE_SPEED * Time.deltaTime * direction;
 
 		if (IsMoving)
 		{
@@ -34,4 +42,7 @@ public class AgentMovement : MonoBehaviour
 			animator.Play("Idle");
 		}
 	}
+
+	void Freeze() => movementFrozen = true;
+	void Unfreeze() => movementFrozen = false;
 }

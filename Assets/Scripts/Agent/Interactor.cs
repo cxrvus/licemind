@@ -11,13 +11,27 @@ public class Interactor : MonoBehaviour
 	public Interactive ClosestInteractive { get; private set; }
 	readonly List<Interactive> interactives = new ();
 
-	public void Update()
-	{
-		bool interactionKeyPressed = Input.GetAxis("Fire1") > 0;
-		
-		if(interactionKeyPressed)
-		{
+	public event Action OnInteractionStart;
+	public event Action OnInteractionStop;
 
+	public void Start()
+	{
+		StartCoroutine(InteractionCheck());
+	}
+
+	IEnumerator InteractionCheck()
+	{
+		for(;;)
+		{
+			if(Input.GetKeyDown(KeyCode.E))
+			{
+				OnInteractionStart?.Invoke();
+				Debug.Log("start");
+				yield return new WaitForSeconds(1);
+				OnInteractionStop?.Invoke();
+				Debug.Log("stop");
+			}
+			else yield return null;
 		}
 	}
 
