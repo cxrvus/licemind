@@ -9,7 +9,7 @@ public class Interactor : MonoBehaviour
 	Agent agent;
 
 	public Interactive nearestTarget;
-	readonly List<Interactive> targets = new ();
+	List<Interactive> targets = new ();
 	bool IsTargeting { get { return targets.Count > 0; } }
 
 	public void Start()
@@ -78,6 +78,7 @@ public class Interactor : MonoBehaviour
 
 		if (!IsTargeting) return;
 
+		targets = targets.Where(x => x).ToList();
 		nearestTarget = targets.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
 		var otherInteractives = targets.Where(x => x != nearestTarget).ToList();
 

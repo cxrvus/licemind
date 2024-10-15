@@ -11,7 +11,7 @@ public abstract class Interactive : MonoBehaviour
 		prompt = Instantiate(promptPrefab, transform).GetComponent<InteractivePrompt>();
 	}
 
-	public void ShowPrompt(bool visibility) => prompt.Show(visibility);
+	public void ShowPrompt(bool visibility) { if (prompt) prompt.Show(visibility); }
 
 	public void Interact(Agent agent)
 	{
