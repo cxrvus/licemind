@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
+	Animator animator;
+
 	public bool isInteracting;
 	public Interactive ClosestInteractive { get; private set; }
 	readonly List<Interactive> interactives = new ();
@@ -16,6 +17,7 @@ public class Interactor : MonoBehaviour
 
 	public void Start()
 	{
+		animator = GetComponentInParent<Animator>();
 		StartCoroutine(InteractionCheck());
 	}
 
@@ -23,7 +25,7 @@ public class Interactor : MonoBehaviour
 	{
 		for(;;)
 		{
-			if(Input.GetKeyDown(KeyCode.E))
+			if(Input.GetKey(KeyCode.E))
 			{
 				StartInteraction();
 				yield return new WaitForSeconds(1);
@@ -36,6 +38,7 @@ public class Interactor : MonoBehaviour
 	void StartInteraction()
 	{
 		OnInteractionStart?.Invoke();
+		animator.Play("Bite");
 	}
 
 	void StopInteraction()
