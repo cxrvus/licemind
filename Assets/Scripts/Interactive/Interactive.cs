@@ -16,8 +16,8 @@ public abstract class Interactive : MonoBehaviour
 	public void Interact(Agent agent)
 	{
 		if (agentAnimation) agent.PlayAnimation(agentAnimation.name);
-		OnInteract();
+		OnInteract(agent);
 	}
 
-	protected abstract void OnInteract();
+	protected abstract void OnInteract(Agent agent);
 }
