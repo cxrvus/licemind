@@ -575,7 +575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 1
-  speed: 0
+  speed: 3
 --- !u!1001 &1199805717
 PrefabInstance:
   m_ObjectHideFlags: 0
