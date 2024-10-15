@@ -25,10 +25,15 @@ public class AgentMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		if (movementFrozen) return;
+		Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+		if (movementFrozen)
+		{
+			rb.velocity = Vector2.zero;
+			return;
+		}
 
 		direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
-		Rigidbody2D rb = GetComponent<Rigidbody2D>();
 		rb.velocity = agent.speed * BASE_SPEED * Time.deltaTime * direction;
 
 		if (IsMoving)
