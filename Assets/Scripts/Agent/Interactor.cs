@@ -25,14 +25,22 @@ public class Interactor : MonoBehaviour
 		{
 			if(Input.GetKeyDown(KeyCode.E))
 			{
-				OnInteractionStart?.Invoke();
-				Debug.Log("start");
+				StartInteraction();
 				yield return new WaitForSeconds(1);
-				OnInteractionStop?.Invoke();
-				Debug.Log("stop");
+				StopInteraction();
 			}
 			else yield return null;
 		}
+	}
+
+	void StartInteraction()
+	{
+		OnInteractionStart?.Invoke();
+	}
+
+	void StopInteraction()
+	{
+		OnInteractionStop?.Invoke();
 	}
 
 	public void OnTriggerEnter2D(Collider2D collision)
