@@ -1,20 +1,17 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(Animator))]
 public abstract class Interactive : MonoBehaviour
 {
-	SpriteRenderer promptSprite;
 	public AnimationClip agentAnimation;
+	public GameObject promptPrefab;
+	InteractivePrompt prompt;
 
-	void Start()
+	public void Start()
 	{
-		promptSprite = GetComponent<SpriteRenderer>();
-    }
+		prompt = Instantiate(promptPrefab, transform).GetComponent<InteractivePrompt>();
+	}
 
-	public void ShowPrompt() => promptSprite.enabled = true;
-	public void HidePrompt() => promptSprite.enabled = false;
+	public void ShowPrompt(bool visibility) => prompt.Show(visibility);
 
 	public void Interact(Agent agent)
 	{

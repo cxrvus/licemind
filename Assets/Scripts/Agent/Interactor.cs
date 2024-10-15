@@ -36,13 +36,13 @@ public class Interactor : MonoBehaviour
 	void StartInteraction()
 	{
 		agent.isInteracting = true;
-		if (agent.isPlayer) nearestTarget.HidePrompt();
+		if (agent.isPlayer) nearestTarget.ShowPrompt(false);
 		nearestTarget.Interact(agent);
 	}
 
 	void StopInteraction()
 	{
-		if (agent.isPlayer) nearestTarget.ShowPrompt();
+		if (agent.isPlayer) nearestTarget.ShowPrompt(true);
 		agent.isInteracting = false;
 	}
 
@@ -73,7 +73,7 @@ public class Interactor : MonoBehaviour
 		else
 		{
 			targets.Remove(interactive);
-			if (agent.isPlayer) interactive.HidePrompt();
+			if (agent.isPlayer) interactive.ShowPrompt(false);
 		}
 
 		if (!IsTargeting) return;
@@ -83,8 +83,8 @@ public class Interactor : MonoBehaviour
 
 		if (agent.isPlayer)
 		{
-			if (nearestTarget) nearestTarget.ShowPrompt();
-			otherInteractives.ForEach(x => x.HidePrompt());
+			if (nearestTarget) nearestTarget.ShowPrompt(true);
+			otherInteractives.ForEach(x => x.ShowPrompt(false));
 		}
 	}
 }
