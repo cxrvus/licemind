@@ -7,21 +7,15 @@ using UnityEngine;
 public class Interactor : MonoBehaviour
 {
 	Agent agent;
-	Animator animator;
 
 	public bool isInteracting;
-	public Interactive ClosestInteractive { get; private set; }
-	readonly List<Interactive> interactives = new ();
-	bool IsHovering { get { return interactives.Count > 0; } }
-
-	public event Action OnInteractionStart;
-	public event Action OnInteractionStop;
+	public Interactive NearestTarget { get; private set; }
+	readonly List<Interactive> targets = new ();
+	bool IsTargeting { get { return targets.Count > 0; } }
 
 	public void Start()
 	{
 		agent = GetComponentInParent<Agent>();
-		animator = GetComponentInParent<Animator>();
-
 		StartCoroutine(InteractionCheck());
 	}
 
@@ -30,7 +24,7 @@ public class Interactor : MonoBehaviour
 		for(;;)
 		{
 			bool interactionKeyPressed = Input.GetKey(KeyCode.E);
-			if(agent.isPlayer && IsHovering && interactionKeyPressed) 
+			if(agent.isPlayer && IsTargeting && interactionKeyPressed) 
 			{
 				StartInteraction();
 				yield return new WaitForSeconds(1);
@@ -42,13 +36,13 @@ public class Interactor : MonoBehaviour
 
 	void StartInteraction()
 	{
-		OnInteractionStart?.Invoke();
-		animator.Play("Bite");
+		agent.isInteracting = true;
+		agent.PlayAnimation("Bite");
 	}
 
 	void StopInteraction()
 	{
-		OnInteractionStop?.Invoke();
+		agent.isInteracting = false;
 	}
 
 	public void OnTriggerEnter2D(Collider2D collision)
@@ -71,20 +65,20 @@ public class Interactor : MonoBehaviour
 	{
 		if (entering)
 		{
-			interactives.Add(interactive);
+			targets.Add(interactive);
 		}
 		else
 		{
-			interactive.HoverStop();
-			interactives.Remove(interactive);
+			interactive.HidePrompt();
+			targets.Remove(interactive);
 		}
 
-		if (!IsHovering) return;
+		if (!IsTargeting) return;
 
-		ClosestInteractive = interactives.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
-		var otherInteractives = interactives.Where(x => x != ClosestInteractive).ToList();
+		NearestTarget = targets.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
+		var otherInteractives = targets.Where(x => x != NearestTarget).ToList();
 
-		if (ClosestInteractive) ClosestInteractive.HoverStart();
-		otherInteractives.ForEach(x => x.HoverStop());
+		if (NearestTarget) NearestTarget.ShowPrompt();
+		otherInteractives.ForEach(x => x.HidePrompt());
 	}
 }
