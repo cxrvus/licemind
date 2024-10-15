@@ -2,29 +2,30 @@ using UnityEngine;
 
 public class AgentMovement : MonoBehaviour
 {
-	public Vector3 Direction { get; private set; }
-	public bool IsMoving { get { return Direction.sqrMagnitude > 0; } }
-
-	public bool isPlayer;
-	public float speed;
 	const float SPEED_FACTOR = 100;
+	public Vector3 direction;
+	public bool IsMoving { get { return direction.sqrMagnitude > 0; } }
 
+	Agent agent;
 	Animator animator;
 
 	void Start()
 	{
+		agent = GetComponent<Agent>();
 		animator = GetComponent<Animator>();
+
+		if(!agent || !animator) { throw new MissingComponentException(); }
 	}
 
 	void FixedUpdate()
 	{
-		Direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
+		direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
 		Rigidbody2D rb = GetComponent<Rigidbody2D>();
-		rb.velocity = speed * SPEED_FACTOR * Time.deltaTime * Direction;
+		rb.velocity = agent.speed * SPEED_FACTOR * Time.deltaTime * direction;
 
 		if (IsMoving)
 		{
-			float angle = Mathf.Atan2(Direction.y, Direction.x) * Mathf.Rad2Deg - 90;
+			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
 			transform.rotation = Quaternion.Euler(0, 0, angle);
 			animator.Play("Walk");
 		}

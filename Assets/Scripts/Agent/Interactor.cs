@@ -1,13 +1,25 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
-
-	Interactive closestInteractive;
+	public bool isInteracting;
+	public Interactive ClosestInteractive { get; private set; }
 	readonly List<Interactive> interactives = new ();
+
+	public void Update()
+	{
+		bool interactionKeyPressed = Input.GetAxis("Fire1") > 0;
+		
+		if(interactionKeyPressed)
+		{
+
+		}
+	}
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -39,10 +51,10 @@ public class Interactor : MonoBehaviour
 
 		if (interactives.Count == 0) return;
 
-		closestInteractive = interactives.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
-		var otherInteractives = interactives.Where(x => x != closestInteractive).ToList();
+		ClosestInteractive = interactives.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
+		var otherInteractives = interactives.Where(x => x != ClosestInteractive).ToList();
 
-		if (closestInteractive) closestInteractive.InteractionHover(true);
+		if (ClosestInteractive) ClosestInteractive.InteractionHover(true);
 		otherInteractives.ForEach(x => x.InteractionHover(false));
 	}
 }

@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 868685019}
   - component: {fileID: 868685021}
   - component: {fileID: 868685017}
+  - component: {fileID: 868685022}
   - component: {fileID: 868685020}
   - component: {fileID: 868685018}
   - component: {fileID: 868685016}
@@ -436,8 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6b58e894b481b1ea809de5acf6fbf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
-  speed: 5
+  direction: {x: 0, y: 0, z: 0}
 --- !u!58 &868685018
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -562,6 +562,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &868685022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868685015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3061c57c66d6697a5511d73291f3d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 1
+  speed: 0
 --- !u!1001 &1199805717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -664,6 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07964e514932ab18a9e5458dc3e15622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInteracting: 0
 --- !u!68 &1678352542
 EdgeCollider2D:
   m_ObjectHideFlags: 0

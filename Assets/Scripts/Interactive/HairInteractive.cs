@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HairInteractive : MonoBehaviour
+public class HairInteractive : Interactive
 {
-	public void Execute()
+	public override void Interact()
 	{
 		Debug.Log("bitin da fuck outa that hair rn");
 	}

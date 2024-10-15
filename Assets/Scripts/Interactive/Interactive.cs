@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactive : MonoBehaviour
+public abstract class Interactive : MonoBehaviour
 {
 	SpriteRenderer sprite;
 
@@ -24,4 +24,6 @@ public class Interactive : MonoBehaviour
 	public void InteractionHover(bool hover) {
 		sprite.enabled = hover;
 	}
+
+	public abstract void Interact();
 }
