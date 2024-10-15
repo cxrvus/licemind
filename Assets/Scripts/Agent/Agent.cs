@@ -19,5 +19,5 @@ public class Agent : MonoBehaviour
 		if(!animator || !interactor) { throw new MissingComponentException(); }
 	}
 
-	public void PlayAnimation(string anim, int layer = -1) => animator.Play(anim, layer);
+	public void PlayAnimation(string anim = "Idle", int layer = -1) => animator.Play(anim, layer);
 }

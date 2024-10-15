@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class Interactive : MonoBehaviour
 {
 	SpriteRenderer promptSprite;
+	public AnimationClip agentAnimation;
 
 	void Start()
 	{
@@ -15,5 +16,11 @@ public abstract class Interactive : MonoBehaviour
 	public void ShowPrompt() => promptSprite.enabled = true;
 	public void HidePrompt() => promptSprite.enabled = false;
 
-	public abstract void Interact();
+	public void Interact(Agent agent)
+	{
+		if (agentAnimation) agent.PlayAnimation(agentAnimation.name);
+		OnInteract();
+	}
+
+	protected abstract void OnInteract();
 }

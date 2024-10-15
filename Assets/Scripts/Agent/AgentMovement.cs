@@ -33,7 +33,7 @@ public class AgentMovement : MonoBehaviour
 		}
 		else
 		{
-			agent.PlayAnimation("Idle");
+			agent.PlayAnimation();
 		}
 	}
 }

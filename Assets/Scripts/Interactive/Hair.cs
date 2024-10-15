@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class HairInteractive : Interactive
+public class Hair : Interactive
 {
-	public override void Interact()
+	protected override void OnInteract()
 	{
 		Debug.Log("bitin da fuck outa that hair rn");
 	}

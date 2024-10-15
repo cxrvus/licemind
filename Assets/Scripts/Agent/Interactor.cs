@@ -8,8 +8,7 @@ public class Interactor : MonoBehaviour
 {
 	Agent agent;
 
-	public bool isInteracting;
-	public Interactive NearestTarget { get; private set; }
+	public Interactive nearestTarget;
 	readonly List<Interactive> targets = new ();
 	bool IsTargeting { get { return targets.Count > 0; } }
 
@@ -37,11 +36,13 @@ public class Interactor : MonoBehaviour
 	void StartInteraction()
 	{
 		agent.isInteracting = true;
-		agent.PlayAnimation("Bite");
+		if (agent.isPlayer) nearestTarget.HidePrompt();
+		nearestTarget.Interact(agent);
 	}
 
 	void StopInteraction()
 	{
+		if (agent.isPlayer) nearestTarget.ShowPrompt();
 		agent.isInteracting = false;
 	}
 
@@ -63,6 +64,8 @@ public class Interactor : MonoBehaviour
 
 	void HandleTrigger(bool entering, Interactive interactive)
 	{
+		if (agent.isInteracting) return;
+
 		if (entering)
 		{
 			targets.Add(interactive);
@@ -75,12 +78,12 @@ public class Interactor : MonoBehaviour
 
 		if (!IsTargeting) return;
 
-		NearestTarget = targets.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
-		var otherInteractives = targets.Where(x => x != NearestTarget).ToList();
+		nearestTarget = targets.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
+		var otherInteractives = targets.Where(x => x != nearestTarget).ToList();
 
 		if (agent.isPlayer)
 		{
-			if (NearestTarget) NearestTarget.ShowPrompt();
+			if (nearestTarget) nearestTarget.ShowPrompt();
 			otherInteractives.ForEach(x => x.HidePrompt());
 		}
 	}
