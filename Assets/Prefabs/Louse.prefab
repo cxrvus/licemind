@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1805583893518565626}
   - component: {fileID: 5711392389282402578}
-  - component: {fileID: 4947632690550164808}
   m_Layer: 0
   m_Name: Antenna
   m_TagString: Untagged
@@ -45,48 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07964e514932ab18a9e5458dc3e15622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nearestTarget: {fileID: 0}
---- !u!68 &4947632690550164808
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2490079099564650676}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0.5}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+  target: {fileID: 0}
+  previousTarget: {fileID: 0}
 --- !u!1 &8157059490741848194
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,6 +134,7 @@ MonoBehaviour:
   speed: 3
   isPlayer: 0
   isInteracting: 0
+  direction: {x: 0, y: 0}
 --- !u!114 &9040051021995289345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c114e80958c5de2b09ea6a46c076f2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentAnimation: {fileID: 0}
+  agentAnimation: {fileID: 7400000, guid: 316b0480aa1aac3ca99b46970ff5b96e, type: 2}
   promptPrefab: {fileID: 5372319149536365435, guid: 967d105ef341609b7897505564802cf0, type: 3}
 --- !u!212 &6604468642603708009
 SpriteRenderer:

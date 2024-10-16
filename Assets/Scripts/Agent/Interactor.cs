@@ -1,16 +1,12 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
 	Agent agent;
 
-	public Interactive nearestTarget;
-	List<Interactive> targets = new ();
-	bool IsTargeting { get { return targets.Count > 0; } }
+	public Interactive target;
+	public Interactive previousTarget;
 
 	public void Start()
 	{
@@ -23,7 +19,7 @@ public class Interactor : MonoBehaviour
 		for(;;)
 		{
 			bool interactionKeyPressed = Input.GetKey(KeyCode.E);
-			if(IsTargeting && interactionKeyPressed && nearestTarget) 
+			if(interactionKeyPressed && target) 
 			{
 				StartInteraction();
 				yield return new WaitForSeconds(1);
@@ -36,56 +32,31 @@ public class Interactor : MonoBehaviour
 	void StartInteraction()
 	{
 		agent.isInteracting = true;
-		if (agent.isPlayer) nearestTarget.ShowPrompt(false);
-		nearestTarget.Interact(agent);
+		if (agent.isPlayer) target.ShowPrompt(false);
+		target.Interact(agent);
 	}
 
 	void StopInteraction()
 	{
-		if (agent.isPlayer) nearestTarget.ShowPrompt(true);
+		if (agent.isPlayer) target.ShowPrompt(true);
 		agent.isInteracting = false;
 	}
 
-	public void OnTriggerEnter2D(Collider2D collision)
-	{
-		if(collision.TryGetComponent<Interactive>(out var interactive))
-		{
-			HandleTrigger(true, interactive);
-		}
-	}
-
-	public void OnTriggerExit2D(Collider2D collision)
-	{
-		if(collision.TryGetComponent<Interactive>(out var interactive))
-		{
-			HandleTrigger(false, interactive);
-		}
-	}
-
-	void HandleTrigger(bool entering, Interactive interactive)
+	public void FixedUpdate()
 	{
 		if (agent.isInteracting) return;
 
-		if (entering)
+		Vector2 direction = transform.rotation * Vector2.up;
+		direction.Normalize();
+		var hitCollider = Physics2D.Raycast(transform.position, direction, 0.5f).collider;
+		var newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
+
+		if (agent.isPlayer && newTarget != target)
 		{
-			targets.Add(interactive);
-		}
-		else
-		{
-			targets.Remove(interactive);
-			if (agent.isPlayer) interactive.ShowPrompt(false);
+			if (target) target.ShowPrompt(false);
+			if (newTarget) newTarget.ShowPrompt(true);
 		}
 
-		if (!IsTargeting) return;
-
-		targets = targets.Where(x => x).ToList();
-		nearestTarget = targets.OrderBy(x => (transform.parent.position - x.transform.position).sqrMagnitude).First();
-		var otherInteractives = targets.Where(x => x != nearestTarget).ToList();
-
-		if (agent.isPlayer)
-		{
-			if (nearestTarget) nearestTarget.ShowPrompt(true);
-			otherInteractives.ForEach(x => x.ShowPrompt(false));
-		}
+		target = newTarget;
 	}
 }

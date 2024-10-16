@@ -26,6 +26,7 @@ public class AgentMovement : MonoBehaviour
 		if (!agent.isPlayer) return;
 
 		direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
+		agent.direction = direction;
 		rb.velocity = agent.speed * Agent.BASE_SPEED * Time.deltaTime * direction;
 
 		if (IsMoving)
