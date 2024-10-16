@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 4633138838398338602}
   - component: {fileID: 6587180213447441845}
   - component: {fileID: 6327603326618179765}
+  - component: {fileID: 9040051021995289345}
   - component: {fileID: 6604468642603708009}
   - component: {fileID: 6508409513889846711}
   - component: {fileID: 3253450158168181381}
@@ -172,8 +173,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  isPlayer: 1
+  isPlayer: 0
   isInteracting: 0
+--- !u!114 &9040051021995289345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8157059490741848194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c114e80958c5de2b09ea6a46c076f2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentAnimation: {fileID: 0}
+  promptPrefab: {fileID: 5372319149536365435, guid: 967d105ef341609b7897505564802cf0, type: 3}
 --- !u!212 &6604468642603708009
 SpriteRenderer:
   m_ObjectHideFlags: 0

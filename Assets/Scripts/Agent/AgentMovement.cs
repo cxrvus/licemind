@@ -22,6 +22,9 @@ public class AgentMovement : MonoBehaviour
 			return;
 		}
 
+		// todo: more nuanced behavior, distinguishing between the player and the NPCs
+		if (!agent.isPlayer) return;
+
 		direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
 		rb.velocity = agent.speed * Agent.BASE_SPEED * Time.deltaTime * direction;
 
