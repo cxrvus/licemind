@@ -15,7 +15,7 @@ public class Agent : MonoBehaviour
 
 	Animator animator;
 
-	public void Awake()
+	void Awake()
 	{
 		animator = GetComponent<Animator>();
 		

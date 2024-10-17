@@ -5,7 +5,7 @@ public class InteractivePrompt : MonoBehaviour
 {
 	SpriteRenderer sprite;
 
-	public void Awake()
+	void Awake()
 	{
 		sprite = GetComponent<SpriteRenderer>();
     }

@@ -6,7 +6,7 @@ public class Hair : Interactive
 	int durability;
 	SpriteRenderer sprite;
 
-	public void Awake()
+	void Awake()
 	{
 		durability = maxDurability;
 		sprite = GetComponent<SpriteRenderer>();

@@ -6,7 +6,7 @@ public abstract class Interactive : MonoBehaviour
 	public GameObject promptPrefab;
 	InteractivePrompt prompt;
 
-	public void Start()
+	void Start()
 	{
 		prompt = Instantiate(promptPrefab, transform).GetComponent<InteractivePrompt>();
 	}

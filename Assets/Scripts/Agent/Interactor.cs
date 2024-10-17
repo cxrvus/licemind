@@ -8,7 +8,7 @@ public class Interactor : MonoBehaviour
 	public Interactive target;
 	public Interactive previousTarget;
 
-	public void Start()
+	void Start()
 	{
 		agent = GetComponentInParent<Agent>();
 		StartCoroutine(InteractionCheck());
@@ -42,7 +42,7 @@ public class Interactor : MonoBehaviour
 		agent.isInteracting = false;
 	}
 
-	public void FixedUpdate()
+	void FixedUpdate()
 	{
 		if (agent.isInteracting) return;
 
