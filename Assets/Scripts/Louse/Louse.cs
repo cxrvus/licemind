@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Agent : MonoBehaviour
+public class Louse : MonoBehaviour
 {
 	public bool isPlayer;
 
@@ -15,9 +15,9 @@ public class Agent : MonoBehaviour
 		}
 
 		// todo: spawn interactor instead of requiring
-		var animator = GetComponent<AgentAnimator>();
+		var animator = GetComponent<LouseAnimator>();
 		var interactor = GetComponentInChildren<Interactor>();
-		var movement = GetComponent<AgentMovement>();
+		var movement = GetComponent<LouseMovement>();
 
 		if(!(animator && interactor && movement)) throw new MissingComponentException();
 	}

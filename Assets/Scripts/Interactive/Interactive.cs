@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Interactive : MonoBehaviour
 {
-	public AnimationClip agentAnimation;
+	public AnimationClip louseAnimation;
 	public GameObject promptPrefab;
 	InteractivePrompt prompt;
 
@@ -11,8 +11,8 @@ public abstract class Interactive : MonoBehaviour
 		if (promptPrefab) prompt = Instantiate(promptPrefab, transform).GetComponent<InteractivePrompt>();
 	}
 
-	public void ShowPrompt(Agent agent) { if (prompt && agent.isPlayer) prompt.Show(true); }
+	public void ShowPrompt(Louse louse) { if (prompt && louse.isPlayer) prompt.Show(true); }
 	public void HidePrompt() { if (prompt) prompt.Show(false); }
 
-	public abstract void Interact(Agent agent);
+	public abstract void Interact(Louse louse);
 }

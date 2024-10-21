@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class AgentMovement : MonoBehaviour
+public class LouseMovement : MonoBehaviour
 {
 	public float speed;
 	const float BASE_SPEED = 100;
 
-	Agent agent;
-	AgentAnimator animator;
+	Louse louse;
+	LouseAnimator animator;
 	Interactor interactor;
 	PlayerMovement playerMovement;
 	Rigidbody2D rb;
@@ -14,8 +14,8 @@ public class AgentMovement : MonoBehaviour
 
 	void Awake()
 	{
-		agent = GetComponent<Agent>();
-		animator = GetComponent<AgentAnimator>();
+		louse = GetComponent<Louse>();
+		animator = GetComponent<LouseAnimator>();
 		interactor = GetComponentInChildren<Interactor>();
 		playerMovement = GetComponent<PlayerMovement>();
 		rb = GetComponent<Rigidbody2D>();
@@ -40,7 +40,7 @@ public class AgentMovement : MonoBehaviour
 	Vector3 GetDirection()
 	{
 		// todo: add NpcMovement
-		if (agent.isPlayer) return playerMovement.GetDirection();
+		if (louse.isPlayer) return playerMovement.GetDirection();
 		else return Vector3.zero;
 	}
 }

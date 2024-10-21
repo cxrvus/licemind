@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AgentAnimator : MonoBehaviour
+public class LouseAnimator : MonoBehaviour
 {
 	Animator animator;
 
@@ -20,6 +20,6 @@ public class AgentAnimator : MonoBehaviour
 
 	public void Interact(Interactive target)
 	{
-		Play(target.agentAnimation.name);
+		Play(target.louseAnimation.name);
 	}
 }

@@ -12,9 +12,9 @@ public class Hair : Interactive
 		sprite = GetComponent<SpriteRenderer>();
 	}
 
-	public override void Interact(Agent agent)
+	public override void Interact(Louse louse)
 	{
-		// todo: agent strength factor
+		// todo: louse strength factor
 		durability--;
 		SetTransparency();
 		if (durability <= 0) Destroy(gameObject);

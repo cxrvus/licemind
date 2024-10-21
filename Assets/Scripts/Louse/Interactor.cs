@@ -5,13 +5,13 @@ public class Interactor : MonoBehaviour
 {
 	public bool IsInteracting { get; private set; }
 
-	Agent agent;
-	AgentAnimator animator;
+	Louse louse;
+	LouseAnimator animator;
 
 	void Awake()
 	{
-		agent = GetComponentInParent<Agent>();
-		animator = GetComponentInParent<AgentAnimator>();
+		louse = GetComponentInParent<Louse>();
+		animator = GetComponentInParent<LouseAnimator>();
 
 		StartCoroutine(InteractionCheck());
 	}
@@ -31,7 +31,7 @@ public class Interactor : MonoBehaviour
 			if (newTarget != target)
 			{
 				if (target) target.HidePrompt();
-				if (newTarget) newTarget.ShowPrompt(agent);
+				if (newTarget) newTarget.ShowPrompt(louse);
 			}
 
 			target = newTarget;
@@ -52,12 +52,12 @@ public class Interactor : MonoBehaviour
 		IsInteracting = true;
 		animator.Interact(target);
 		target.HidePrompt();
-		target.Interact(agent);
+		target.Interact(louse);
 	}
 
 	void StopInteraction(Interactive target)
 	{
 		IsInteracting = false;
-		target.ShowPrompt(agent);
+		target.ShowPrompt(louse);
 	}
 }
