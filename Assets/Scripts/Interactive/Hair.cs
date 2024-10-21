@@ -12,7 +12,7 @@ public class Hair : Interactive
 		sprite = GetComponent<SpriteRenderer>();
 	}
 
-	public override void CustomInteract(Agent agent)
+	public override void Interact(Agent agent)
 	{
 		// todo: agent strength factor
 		durability--;

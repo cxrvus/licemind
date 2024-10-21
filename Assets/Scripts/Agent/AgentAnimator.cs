@@ -10,7 +10,7 @@ public class AgentAnimator : MonoBehaviour
 		if(!animator) throw new MissingComponentException();
 	}
 
-	public void Play(string anim, int layer = -1) => animator.Play(anim, layer);
+	void Play(string anim, int layer = -1) => animator.Play(anim, layer);
 
 	public void Movement(bool isMoving)
 	{

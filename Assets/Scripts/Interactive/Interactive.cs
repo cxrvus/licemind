@@ -11,14 +11,8 @@ public abstract class Interactive : MonoBehaviour
 		if (promptPrefab) prompt = Instantiate(promptPrefab, transform).GetComponent<InteractivePrompt>();
 	}
 
-	public void ShowPrompt(Agent agent) { if (prompt && agent.IsPlayer) prompt.Show(true); }
+	public void ShowPrompt(Agent agent) { if (prompt && agent.isPlayer) prompt.Show(true); }
 	public void HidePrompt() { if (prompt) prompt.Show(false); }
 
-	public void Interact(Agent agent)
-	{
-		
-		CustomInteract(agent);
-	}
-
-	public abstract void CustomInteract(Agent agent);
+	public abstract void Interact(Agent agent);
 }

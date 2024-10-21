@@ -1,10 +1,8 @@
-using System;
-
 public class LouseInteractive : Interactive
 {
-	public override void CustomInteract(Agent other)
+	public override void Interact(Agent other)
 	{
-		other.BecomeNpc();
-		GetComponent<Agent>().BecomePlayer();
+		other.isPlayer = false;
+		GetComponent<Agent>().isPlayer = true;
 	}
 }

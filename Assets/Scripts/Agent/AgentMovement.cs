@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class AgentMovement : MonoBehaviour
@@ -6,30 +5,28 @@ public class AgentMovement : MonoBehaviour
 	public float speed;
 	const float BASE_SPEED = 100;
 
-	bool isFrozen;
+	Agent agent;
+	AgentAnimator animator;
+	Interactor interactor;
+	PlayerMovement playerMovement;
 	Rigidbody2D rb;
 
-	public event Action<bool> OnMovement;
 
 	void Awake()
 	{
+		agent = GetComponent<Agent>();
+		animator = GetComponent<AgentAnimator>();
+		interactor = GetComponentInChildren<Interactor>();
+		playerMovement = GetComponent<PlayerMovement>();
 		rb = GetComponent<Rigidbody2D>();
 	}
 
-	//TODO
-	public void Freeze(bool frozen) => isFrozen = frozen;
-
-	void Move(Vector3 direction)
+	void FixedUpdate()
 	{
-		if (isFrozen)
-		{
-			rb.velocity = Vector2.zero;
-			return;
-		}
-
+		var frozen = interactor.IsInteracting;
+		var direction = frozen ? Vector3.zero : GetDirection();
+		var isMoving = !frozen && direction.sqrMagnitude > 0;
 		rb.velocity = speed * BASE_SPEED * Time.deltaTime * direction;
-
-		var isMoving = direction.sqrMagnitude > 0;
 
 		if(isMoving)
 		{
@@ -37,6 +34,13 @@ public class AgentMovement : MonoBehaviour
 			transform.rotation = Quaternion.Euler(0, 0, angle);
 		}
 
-		OnMovement.Invoke(isMoving);
+		if(!frozen) animator.Movement(isMoving);
+	}
+
+	Vector3 GetDirection()
+	{
+		// todo: add NpcMovement
+		if (agent.isPlayer) return playerMovement.GetDirection();
+		else return Vector3.zero;
 	}
 }

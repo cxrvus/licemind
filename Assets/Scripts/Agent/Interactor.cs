@@ -1,22 +1,17 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
-	public event Action<Interactive> OnStartInteraction;
-	public event Action<Interactive> OnStopInteraction;
-
-	public Interactive previousTarget;
+	public bool IsInteracting { get; private set; }
 
 	Agent agent;
+	AgentAnimator animator;
 
 	void Awake()
 	{
 		agent = GetComponentInParent<Agent>();
-
-		OnStartInteraction += StartInteraction;
-		OnStopInteraction += StopInteraction;
+		animator = GetComponentInParent<AgentAnimator>();
 
 		StartCoroutine(InteractionCheck());
 	}
@@ -44,9 +39,9 @@ public class Interactor : MonoBehaviour
 
 			if(interactionKeyPressed && target) 
 			{
-				OnStartInteraction.Invoke(target);
+				StartInteraction(target);
 				yield return new WaitForSeconds(1);
-				OnStopInteraction.Invoke(target);
+				StopInteraction(target);
 			}
 			else yield return null;
 		}
@@ -54,12 +49,15 @@ public class Interactor : MonoBehaviour
 
 	void StartInteraction(Interactive target)
 	{
+		IsInteracting = true;
+		animator.Interact(target);
 		target.HidePrompt();
-		target.CustomInteract(agent);
+		target.Interact(agent);
 	}
 
 	void StopInteraction(Interactive target)
 	{
+		IsInteracting = false;
 		target.ShowPrompt(agent);
 	}
 }
