@@ -1,35 +1,52 @@
+using System;
 using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-	public float speed;
-
-	// todo: propagate these using events instead of direct coupling
-	public bool isPlayer;
-	public bool isInteracting;
 	public Vector2 direction;
-
-	public const float BASE_SPEED = 100;
+	public bool IsPlayer { get; private set; }
 
 	static bool playerExists = false;
 
-	Animator animator;
-
 	void Awake()
 	{
-		animator = GetComponent<Animator>();
-		
-		// todo: spawn interactor instead of requiring
-		var interactor = GetComponentInChildren<Interactor>();
-
-		if(!animator || !interactor) throw new MissingComponentException();
+		LinkEvents();
 
 		if (!playerExists)
 		{
-			isPlayer = true;
 			playerExists = true;
+			BecomePlayer();
 		}
 	}
 
-	public void PlayAnimation(string anim = "Idle", int layer = -1) => animator.Play(anim, layer);
+	void LinkEvents()
+	{
+		// todo: spawn interactor instead of requiring
+		var animator = GetComponent<AgentAnimator>();
+		var interactive = GetComponent<LouseInteractive>();
+		var interactor = GetComponentInChildren<Interactor>();
+		var movement = GetComponent<AgentMovement>();
+
+		if(!(animator && interactor && movement)) throw new MissingComponentException();
+
+		movement.OnMovement += animator.Movement;
+		interactor.OnStartInteraction += animator.Interact;
+	}
+
+	public void BecomePlayer()
+	{
+		IsPlayer = true;
+		PlayerSwitch();
+	}
+
+	public void BecomeNpc()
+	{
+		IsPlayer = false;
+		PlayerSwitch();
+	}
+
+	void PlayerSwitch()
+	{
+		GetComponent<PlayerMovement>().enabled = IsPlayer;
+	}
 }

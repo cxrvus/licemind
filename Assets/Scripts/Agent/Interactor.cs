@@ -1,62 +1,65 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
-	Agent agent;
+	public event Action<Interactive> OnStartInteraction;
+	public event Action<Interactive> OnStopInteraction;
 
-	public Interactive target;
 	public Interactive previousTarget;
 
-	void Start()
+	Agent agent;
+
+	void Awake()
 	{
 		agent = GetComponentInParent<Agent>();
+
+		OnStartInteraction += StartInteraction;
+		OnStopInteraction += StopInteraction;
+
 		StartCoroutine(InteractionCheck());
 	}
 
 	IEnumerator InteractionCheck()
 	{
+		Interactive newTarget, target = null;
+		Collider2D hitCollider;
+
 		for(;;)
 		{
+			Vector2 direction = transform.rotation * Vector2.up;
+			direction.Normalize();
+			hitCollider = Physics2D.Raycast(transform.position, direction, 0.5f).collider;
+			newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
+
+			if (newTarget != target)
+			{
+				if (target) target.HidePrompt();
+				if (newTarget) newTarget.ShowPrompt(agent);
+			}
+
+			target = newTarget;
 			bool interactionKeyPressed = Input.GetKey(KeyCode.E);
+
 			if(interactionKeyPressed && target) 
 			{
-				StartInteraction();
+				OnStartInteraction.Invoke(target);
 				yield return new WaitForSeconds(1);
-				StopInteraction();
+				OnStopInteraction.Invoke(target);
 			}
 			else yield return null;
 		}
 	}
 
-	void StartInteraction()
+	void StartInteraction(Interactive target)
 	{
-		agent.isInteracting = true;
-		if (agent.isPlayer) target.ShowPrompt(false);
-		target.Interact(agent);
+		target.HidePrompt();
+		target.CustomInteract(agent);
 	}
 
-	void StopInteraction()
+	void StopInteraction(Interactive target)
 	{
-		if (agent.isPlayer) target.ShowPrompt(true);
-		agent.isInteracting = false;
-	}
-
-	void FixedUpdate()
-	{
-		if (agent.isInteracting) return;
-
-		Vector2 direction = transform.rotation * Vector2.up;
-		direction.Normalize();
-		var hitCollider = Physics2D.Raycast(transform.position, direction, 0.5f).collider;
-		var newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
-
-		if (agent.isPlayer && newTarget != target)
-		{
-			if (target) target.ShowPrompt(false);
-			if (newTarget) newTarget.ShowPrompt(true);
-		}
-
-		target = newTarget;
+		target.ShowPrompt(agent);
 	}
 }

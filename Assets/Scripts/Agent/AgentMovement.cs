@@ -1,43 +1,42 @@
+using System;
 using UnityEngine;
 
 public class AgentMovement : MonoBehaviour
 {
-	public Vector3 direction;
-	public bool IsMoving { get { return direction.sqrMagnitude > 0; } }
+	public float speed;
+	const float BASE_SPEED = 100;
 
-	Agent agent;
+	bool isFrozen;
+	Rigidbody2D rb;
 
-	void Start()
+	public event Action<bool> OnMovement;
+
+	void Awake()
 	{
-		agent = GetComponent<Agent>();
+		rb = GetComponent<Rigidbody2D>();
 	}
 
-	void FixedUpdate()
-	{
-		Rigidbody2D rb = GetComponent<Rigidbody2D>();
+	//TODO
+	public void Freeze(bool frozen) => isFrozen = frozen;
 
-		if (agent.isInteracting)
+	void Move(Vector3 direction)
+	{
+		if (isFrozen)
 		{
 			rb.velocity = Vector2.zero;
 			return;
 		}
 
-		// todo: more nuanced behavior, distinguishing between the player and the NPCs
-		if (!agent.isPlayer) return;
+		rb.velocity = speed * BASE_SPEED * Time.deltaTime * direction;
 
-		direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
-		agent.direction = direction;
-		rb.velocity = agent.speed * Agent.BASE_SPEED * Time.deltaTime * direction;
+		var isMoving = direction.sqrMagnitude > 0;
 
-		if (IsMoving)
+		if(isMoving)
 		{
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
 			transform.rotation = Quaternion.Euler(0, 0, angle);
-			agent.PlayAnimation("Walk");
 		}
-		else
-		{
-			agent.PlayAnimation();
-		}
+
+		OnMovement.Invoke(isMoving);
 	}
 }
