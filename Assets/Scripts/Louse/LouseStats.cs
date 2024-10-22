@@ -1,21 +1,32 @@
+using System;
 using UnityEngine;
 
 public class LouseStats : MonoBehaviour
 {
-	public bool IsPlayer { get; private set; }
-	public float Strength { get; private set; }
-	public float MaxEnergy { get; private set; }
-	public float Energy { get; private set; }
+	public static LouseStats PlayerStats { get; private set; }
+	bool _isPlayer;
+	public bool IsPlayer { get { return _isPlayer; }
+	set {
+			if(value)
+			{
+				if (PlayerStats) PlayerStats._isPlayer = false;
+				PlayerStats = this;
+				_isPlayer = true;
+			}
+			else throw new ArgumentOutOfRangeException("Can only set IsPlayer to true");
+		}
+	}
 
-	static bool playerExists = false;
+	float _energy;
+	public float Energy { get { return _energy; } set { _energy = Math.Clamp(value, 0, MaxEnergy); } }
+	public float MaxEnergy { get; private set; }
+
+	public float Strength { get; private set; }
+
 
 	void Awake()
 	{
-		if (!playerExists)
-		{
-			playerExists = true;
-			IsPlayer = true;
-		}
+		if (!PlayerStats) IsPlayer = true;
 
 		// todo: spawn interactor instead of requiring
 		var animator = GetComponent<LouseAnimator>();
@@ -24,7 +35,4 @@ public class LouseStats : MonoBehaviour
 
 		if(!(animator && interactor && movement)) throw new MissingComponentException();
 	}
-
-	public void BecomePlayer() => IsPlayer = true;
-	public void BecomeNpc() => IsPlayer = false;
 }
