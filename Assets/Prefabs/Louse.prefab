@@ -232,7 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3061c57c66d6697a5511d73291f3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0}
 --- !u!114 &6587180213447441845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c114e80958c5de2b09ea6a46c076f2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentAnimation: {fileID: 7400000, guid: 316b0480aa1aac3ca99b46970ff5b96e, type: 2}
+  louseAnimation: {fileID: 0}
   promptPrefab: {fileID: 5372319149536365435, guid: 967d105ef341609b7897505564802cf0, type: 3}
 --- !u!114 &387329397441343796
 MonoBehaviour:
