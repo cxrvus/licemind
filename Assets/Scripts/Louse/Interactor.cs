@@ -5,12 +5,14 @@ public class Interactor : MonoBehaviour
 {
 	public bool IsInteracting { get; private set; }
 
-	Louse louse;
+	LouseStats _stats;
 	LouseAnimator animator;
+
+	bool IsPlayer { get { return _stats.isPlayer; } }
 
 	void Awake()
 	{
-		louse = GetComponentInParent<Louse>();
+		_stats = GetComponentInParent<LouseStats>();
 		animator = GetComponentInParent<LouseAnimator>();
 
 		StartCoroutine(InteractionCheck());
@@ -31,7 +33,7 @@ public class Interactor : MonoBehaviour
 			if (newTarget != target)
 			{
 				if (target) target.HidePrompt();
-				if (newTarget) newTarget.ShowPrompt(louse);
+				if (newTarget && IsPlayer) newTarget.ShowPrompt();
 			}
 
 			target = newTarget;
@@ -52,12 +54,12 @@ public class Interactor : MonoBehaviour
 		IsInteracting = true;
 		animator.Interact(target);
 		target.HidePrompt();
-		target.Interact(louse);
+		target.Interact(_stats);
 	}
 
 	void StopInteraction(Interactive target)
 	{
 		IsInteracting = false;
-		target.ShowPrompt(louse);
+		if (IsPlayer) target.ShowPrompt();
 	}
 }

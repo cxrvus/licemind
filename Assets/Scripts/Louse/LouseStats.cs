@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Louse : MonoBehaviour
+public class LouseStats : MonoBehaviour
 {
 	public bool isPlayer;
 

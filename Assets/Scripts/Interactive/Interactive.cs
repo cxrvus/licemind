@@ -11,8 +11,8 @@ public abstract class Interactive : MonoBehaviour
 		if (promptPrefab) prompt = Instantiate(promptPrefab, transform).GetComponent<InteractivePrompt>();
 	}
 
-	public void ShowPrompt(Louse louse) { if (prompt && louse.isPlayer) prompt.Show(true); }
+	public void ShowPrompt() { if (prompt) prompt.Show(true); }
 	public void HidePrompt() { if (prompt) prompt.Show(false); }
 
-	public abstract void Interact(Louse louse);
+	public abstract void Interact(LouseStats stats);
 }

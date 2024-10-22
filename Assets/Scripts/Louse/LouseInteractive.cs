@@ -1,8 +1,8 @@
 public class LouseInteractive : Interactive
 {
-	public override void Interact(Louse other)
+	public override void Interact(LouseStats other)
 	{
 		other.isPlayer = false;
-		GetComponent<Louse>().isPlayer = true;
+		GetComponent<LouseStats>().isPlayer = true;
 	}
 }

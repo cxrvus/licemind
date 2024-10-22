@@ -5,16 +5,17 @@ public class LouseMovement : MonoBehaviour
 	public float speed;
 	const float BASE_SPEED = 100;
 
-	Louse louse;
 	LouseAnimator animator;
 	Interactor interactor;
 	PlayerMovement playerMovement;
 	Rigidbody2D rb;
+	LouseStats _stats;
+	bool IsPlayer { get { return _stats.isPlayer; } }
 
 
 	void Awake()
 	{
-		louse = GetComponent<Louse>();
+		_stats = GetComponent<LouseStats>();
 		animator = GetComponent<LouseAnimator>();
 		interactor = GetComponentInChildren<Interactor>();
 		playerMovement = GetComponent<PlayerMovement>();
@@ -40,7 +41,7 @@ public class LouseMovement : MonoBehaviour
 	Vector3 GetDirection()
 	{
 		// todo: add NpcMovement
-		if (louse.isPlayer) return playerMovement.GetDirection();
+		if (IsPlayer) return playerMovement.GetDirection();
 		else return Vector3.zero;
 	}
 }
