@@ -12,7 +12,7 @@ public class Hair : Interactive
 		sprite = GetComponent<SpriteRenderer>();
 	}
 
-	public override void Interact(LouseStats stats)
+	public override void Interact(LouseStats interactor)
 	{
 		// todo: louse strength factor
 		durability--;
