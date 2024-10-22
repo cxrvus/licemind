@@ -3,7 +3,9 @@ using UnityEngine;
 public class LouseStats : MonoBehaviour
 {
 	public bool IsPlayer { get; private set; }
-
+	public float Strength { get; private set; }
+	public float MaxEnergy { get; private set; }
+	public float Energy { get; private set; }
 
 	static bool playerExists = false;
 
