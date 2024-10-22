@@ -10,7 +10,7 @@ public class LouseMovement : MonoBehaviour
 	PlayerMovement playerMovement;
 	Rigidbody2D rb;
 	LouseStats _stats;
-	bool IsPlayer { get { return _stats.isPlayer; } }
+	bool IsPlayer { get { return _stats.IsPlayer; } }
 
 
 	void Awake()

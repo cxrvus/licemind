@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class LouseStats : MonoBehaviour
 {
-	public bool isPlayer;
+	public bool IsPlayer { get; private set; }
+
 
 	static bool playerExists = false;
 
@@ -11,7 +12,7 @@ public class LouseStats : MonoBehaviour
 		if (!playerExists)
 		{
 			playerExists = true;
-			isPlayer = true;
+			IsPlayer = true;
 		}
 
 		// todo: spawn interactor instead of requiring
@@ -21,4 +22,7 @@ public class LouseStats : MonoBehaviour
 
 		if(!(animator && interactor && movement)) throw new MissingComponentException();
 	}
+
+	public void BecomePlayer() => IsPlayer = true;
+	public void BecomeNpc() => IsPlayer = false;
 }
