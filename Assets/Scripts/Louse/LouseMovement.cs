@@ -27,7 +27,7 @@ public class LouseMovement : MonoBehaviour
 		var frozen = interactor.IsInteracting;
 		var direction = frozen ? Vector3.zero : GetDirection();
 		var isMoving = !frozen && direction.sqrMagnitude > 0;
-		rb.velocity = speed * BASE_SPEED * Time.deltaTime * direction;
+		rb.linearVelocity = speed * BASE_SPEED * Time.deltaTime * direction;
 
 		if(isMoving)
 		{
