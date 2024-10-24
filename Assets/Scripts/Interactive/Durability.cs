@@ -17,6 +17,7 @@ public class Durability : MonoBehaviour
 	public void Setup(int valueCap)
 	{
 		this.valueCap = valueCap;
+		Value = valueCap;
 		isSetup = true;
 	}
 
