@@ -4,7 +4,7 @@ public class Hair : Interactive
 
 	void Awake()
 	{
-		durability = new Durability(gameObject, HairBaseStats.durabilityCap, 0.8f);
+		durability = new Durability(gameObject, InteractiveBaseStats.durabilityCap, 0.8f);
 	}
 
 	public override void Interact(LouseStats interactor)

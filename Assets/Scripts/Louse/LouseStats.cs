@@ -32,12 +32,21 @@ public class LouseStats : MonoBehaviour
 	public int EnergyCap { get; private set; }
 	public int Energy { get => _energy; set { _energy = Math.Clamp(value, 0, EnergyCap); UpdateStats(); } }
 
+	int _age;
+	public int AgeCap { get; private set; }
+	public int Age { get => _age; private set { _age = value; UpdateStats(); } }
+
+	int _digestion;
+	public int DigestionCap { get; private set; }
+	public int Digestion { get => _digestion; set { _digestion = Math.Clamp(value, 0, DigestionCap); UpdateStats(); } }
+
 	public int Strength { get; private set; }
 
 	public int Speed { get; private set; }
 	LouseMovement _movement;
 	bool IsMoving { get => _movement.IsMoving; }
 
+	bool isSetup;
 
 	void Start()
 	{
@@ -47,37 +56,46 @@ public class LouseStats : MonoBehaviour
 		if (!PlayerStats) IsPlayer = true;
 
 		SetupStats();
-		StartCoroutine(Metabolism());
+		StartCoroutine(ProcessStats());
 	}
 
-	IEnumerator Metabolism()
+	void SetupStats()
+	{
+		EnergyCap = LouseBaseStats.energyCap;
+		Energy = EnergyCap;
+		AgeCap = LouseBaseStats.ageCap;
+		DigestionCap = LouseBaseStats.digestionCap;
+		Strength = LouseBaseStats.strength;
+		Speed = LouseBaseStats.speed;
+		// idea: add random value variations
+		isSetup = true;
+	}
+
+
+	IEnumerator ProcessStats()
 	{
 		for(;;)
 		{
 			var depletion = IsPlayer ? IsMoving ? LouseBaseStats.metabolismPlayerWalk : LouseBaseStats.metabolismPlayerIdle : LouseBaseStats.metabolismNpcIdle;
 			Energy -= depletion;
-			yield return new WaitForSeconds(1);
+			Digestion += IsMoving ? LouseBaseStats.digestionWalk : LouseBaseStats.digestionIdle;
+			Age++;
+			yield return new WaitForSeconds(LouseBaseStats.updateInterval);
 		}
-	}
-
-	void SetupStats()
-	{
-		// idea: add random value variations
-		EnergyCap = LouseBaseStats.energyCap;
-		Energy = EnergyCap;
-		Strength = LouseBaseStats.strength;
-		Speed = LouseBaseStats.speed;
 	}
 
 	void UpdateStats()
 	{
-		DeathCheck();
 		OnUpdateStats?.Invoke();
+		if (!isSetup) return;
+		if (Energy == 0 || Age >= AgeCap) Die();
+		if (Digestion >= DigestionCap) Defecate();
 	}
 
-	void DeathCheck()
+	void Defecate()
 	{
-		if (Energy == 0) Die();
+		// todo: spawn shit
+		Digestion = 0;
 	}
 
 	void Die()
