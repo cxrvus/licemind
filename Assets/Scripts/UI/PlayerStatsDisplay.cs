@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStatsDisplay : MonoBehaviour
 {
 	public GameObject energyDisplay;
+	public GameObject countDisplay;
 
 	void Awake()
 	{
@@ -14,7 +15,9 @@ public class PlayerStatsDisplay : MonoBehaviour
 	void UpdateStats()
 	{
 		var player = LouseStats.PlayerStats;
+
 		energyDisplay.GetComponent<TMP_Text>().text = StatsText(player.Energy, player.MaxEnergy, 2);
+		countDisplay.GetComponent<TMP_Text>().text = LouseStats.LouseCount.ToString().PadLeft(2, '0');
 	}
 
 	string StatsText(IFormattable current, IFormattable max, int width)
