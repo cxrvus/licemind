@@ -2,30 +2,27 @@ using UnityEngine;
 
 public class Hair : Interactive
 {
-	public int maxDurability = 1;
 	int durability;
 	SpriteRenderer sprite;
 
 	void Awake()
 	{
-		durability = maxDurability;
+		durability = HairBaseStats.durabilityCap;
 		sprite = GetComponent<SpriteRenderer>();
 	}
 
 	public override void Interact(LouseStats interactor)
 	{
-		// todo: louse strength factor
-		durability--;
+		var strength = interactor.Strength;
+		durability -= strength;
+		interactor.Energy -= strength;
 		SetTransparency();
 		if (durability <= 0) Destroy(gameObject);
 	}
 
 	void SetTransparency()
 	{
-		const float BASE_TRANSP = 0.8f;
-		const float TRANSP_FACTOR = 1f - BASE_TRANSP;
-
-		var ratio = (float)durability / maxDurability * TRANSP_FACTOR + BASE_TRANSP;
+		var ratio = (float)durability / HairBaseStats.durabilityCap * HairBaseStats.transpFactor + HairBaseStats.baseTransp;
 
 		var color = sprite.color;
 		color.a = ratio;

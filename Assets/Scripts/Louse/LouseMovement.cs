@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class LouseMovement : MonoBehaviour
 {
-	public float speed;
-	const float BASE_SPEED = 100;
+	public bool IsMoving { get; private set; }
+
+	const float SPEED_FACTOR = 100;
 
 	LouseAnimator animator;
 	Interactor interactor;
 	PlayerMovement playerMovement;
 	Rigidbody2D rb;
-	LouseStats _stats;
-	bool IsPlayer { get { return _stats.IsPlayer; } }
+	LouseStats stats;
 
 
 	void Awake()
 	{
-		_stats = GetComponent<LouseStats>();
+		stats = GetComponent<LouseStats>();
 		animator = GetComponent<LouseAnimator>();
 		interactor = GetComponentInChildren<Interactor>();
 		playerMovement = GetComponent<PlayerMovement>();
@@ -26,22 +26,22 @@ public class LouseMovement : MonoBehaviour
 	{
 		var frozen = interactor.IsInteracting;
 		var direction = frozen ? Vector3.zero : GetDirection();
-		var isMoving = !frozen && direction.sqrMagnitude > 0;
-		rb.linearVelocity = speed * BASE_SPEED * Time.deltaTime * direction;
+		IsMoving = !frozen && direction.sqrMagnitude > 0;
+		rb.linearVelocity = stats.Speed * SPEED_FACTOR * Time.deltaTime * direction;
 
-		if(isMoving)
+		if(IsMoving)
 		{
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
 			transform.rotation = Quaternion.Euler(0, 0, angle);
 		}
 
-		if(!frozen) animator.Movement(isMoving);
+		if(!frozen) animator.Movement(IsMoving);
 	}
 
 	Vector3 GetDirection()
 	{
 		// todo: add NpcMovement
-		if (IsPlayer) return playerMovement.GetDirection();
+		if (stats.IsPlayer) return playerMovement.GetDirection();
 		else return Vector3.zero;
 	}
 }

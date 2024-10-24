@@ -31,10 +31,14 @@ public class LouseStats : MonoBehaviour
 
 	public int Strength { get; private set; }
 
+	public int Speed { get; private set; }
+	LouseMovement _movement;
+	bool IsMoving { get { return _movement.IsMoving; } }
 
 
 	void Start()
 	{
+		_movement = GetComponent<LouseMovement>();
 		lice.Add(this);
 
 		if (!PlayerStats) IsPlayer = true;
@@ -47,7 +51,8 @@ public class LouseStats : MonoBehaviour
 	{
 		for(;;)
 		{
-			Energy -= 1;
+			var depletion = IsPlayer ? IsMoving ? LouseBaseStats.metabolismPlayerWalk : LouseBaseStats.metabolismPlayerIdle : LouseBaseStats.metabolismNpcIdle;
+			Energy -= depletion;
 			yield return new WaitForSeconds(1);
 		}
 	}
@@ -58,6 +63,7 @@ public class LouseStats : MonoBehaviour
 		EnergyCap = LouseBaseStats.energyCap;
 		Energy = EnergyCap;
 		Strength = LouseBaseStats.strength;
+		Speed = LouseBaseStats.speed;
 	}
 
 	void UpdateStats()
