@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 750151613110007627}
   - component: {fileID: 8310138327075025259}
   - component: {fileID: 7983322023292996014}
-  - component: {fileID: 4224812917993309858}
-  - component: {fileID: 5475858677804043107}
+  - component: {fileID: 748543066849591425}
+  - component: {fileID: 6390585889805380701}
   m_Layer: 0
-  m_Name: Hair
+  m_Name: Artery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 28e4fa5b24be9587d8416645c7ae8c1e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f19b0a51555b1ea2a9c9649be22575f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,7 +120,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -136,7 +136,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4224812917993309858
+--- !u!114 &748543066849591425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,12 +145,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1769923587006817330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1ac385babc506d6baff0084a29794de, type: 3}
+  m_Script: {fileID: 11500000, guid: e01e7ba604cf6bfab88029f558895d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   louseAnimation: {fileID: 7400000, guid: 316b0480aa1aac3ca99b46970ff5b96e, type: 2}
   promptPrefab: {fileID: 5372319149536365435, guid: 967d105ef341609b7897505564802cf0, type: 3}
---- !u!114 &5475858677804043107
+--- !u!114 &6390585889805380701
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
