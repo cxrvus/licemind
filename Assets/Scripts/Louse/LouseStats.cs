@@ -46,8 +46,6 @@ public class LouseStats : MonoBehaviour
 	LouseMovement _movement;
 	bool IsMoving { get => _movement.IsMoving; }
 
-	bool isSetup;
-
 	void Start()
 	{
 		_movement = GetComponent<LouseMovement>();
@@ -62,13 +60,12 @@ public class LouseStats : MonoBehaviour
 	void SetupStats()
 	{
 		EnergyCap = LouseBaseStats.energyCap;
-		Energy = EnergyCap;
+		_energy = EnergyCap;
 		AgeCap = LouseBaseStats.ageCap;
 		DigestionCap = LouseBaseStats.digestionCap;
 		Strength = LouseBaseStats.strength;
 		Speed = LouseBaseStats.speed;
 		// idea: add random value variations
-		isSetup = true;
 	}
 
 
@@ -87,7 +84,6 @@ public class LouseStats : MonoBehaviour
 	void UpdateStats()
 	{
 		OnUpdateStats?.Invoke();
-		if (!isSetup) return;
 		if (Energy == 0 || Age >= AgeCap) Die();
 		if (Digestion >= DigestionCap) Defecate();
 	}
