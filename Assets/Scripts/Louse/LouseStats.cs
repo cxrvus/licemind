@@ -25,11 +25,13 @@ public class LouseStats : MonoBehaviour
 	public static event Action OnGameOver;
 
 
-	float _energy;
-	public float MaxEnergy { get; private set; }
-	public float Energy { get { return _energy; } set { _energy = Math.Clamp(value, 0, MaxEnergy); UpdateStats(); } }
+	int _energy;
+	public int EnergyCap { get; private set; }
+	public int Energy { get { return _energy; } set { _energy = Math.Clamp(value, 0, EnergyCap); UpdateStats(); } }
 
-	public float Strength { get; private set; }
+	public int Strength { get; private set; }
+
+
 
 	void Start()
 	{
@@ -37,9 +39,7 @@ public class LouseStats : MonoBehaviour
 
 		if (!PlayerStats) IsPlayer = true;
 
-		MaxEnergy = 10;
-		Energy = MaxEnergy;
-
+		SetupStats();
 		StartCoroutine(Metabolism());
 	}
 
@@ -50,6 +50,14 @@ public class LouseStats : MonoBehaviour
 			Energy -= 1;
 			yield return new WaitForSeconds(1);
 		}
+	}
+
+	void SetupStats()
+	{
+		// idea: add random value variations
+		EnergyCap = LouseBaseStats.energyCap;
+		Energy = EnergyCap;
+		Strength = LouseBaseStats.strength;
 	}
 
 	void UpdateStats()

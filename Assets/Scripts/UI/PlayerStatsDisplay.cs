@@ -16,7 +16,7 @@ public class PlayerStatsDisplay : MonoBehaviour
 	{
 		var player = LouseStats.PlayerStats;
 
-		energyDisplay.GetComponent<TMP_Text>().text = StatsText(player.Energy, player.MaxEnergy, 2);
+		energyDisplay.GetComponent<TMP_Text>().text = StatsText(player.Energy, player.EnergyCap, 2);
 		countDisplay.GetComponent<TMP_Text>().text = LouseStats.LouseCount.ToString().PadLeft(2, '0');
 	}
 
