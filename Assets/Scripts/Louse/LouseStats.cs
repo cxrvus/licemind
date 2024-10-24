@@ -31,20 +31,10 @@ public class LouseStats : MonoBehaviour
 
 	public float Strength { get; private set; }
 
-	void Awake()
-	{
-		// todo: spawn interactor instead of requiring
-		var animator = GetComponent<LouseAnimator>();
-		var interactor = GetComponentInChildren<Interactor>();
-		var movement = GetComponent<LouseMovement>();
-
-		if(!(animator && interactor && movement)) throw new MissingComponentException();
-
-		lice.Add(this);
-	}
-
 	void Start()
 	{
+		lice.Add(this);
+
 		if (!PlayerStats) IsPlayer = true;
 
 		MaxEnergy = 10;
