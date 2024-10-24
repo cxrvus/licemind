@@ -97,10 +97,11 @@ public class LouseStats : MonoBehaviour
 		Digestion = 0;
 	}
 
-	void SpawnAttractor(GameObject gameObject)
+	void SpawnAttractor(GameObject prefab)
 	{
-		gameObject = Instantiate(gameObject);
-		gameObject.transform.position = transform.position;
+		var gameObject = Instantiate(prefab);
+		var position = new Vector3(transform.position.x, transform.position.y, -2); // idea: parameterize Z using SO
+		gameObject.transform.position = position;
 	}
 
 	void Die()
