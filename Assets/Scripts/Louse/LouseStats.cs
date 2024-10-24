@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class LouseStats : MonoBehaviour
 {
+	public GameObject defecationObject;
+	public GameObject corpseObject;
+
 	static readonly List<LouseStats> lice = new ();
 	public static int LouseCount { get => lice.Count; }
 
@@ -90,14 +93,20 @@ public class LouseStats : MonoBehaviour
 
 	void Defecate()
 	{
-		// todo: spawn shit
+		SpawnAttractor(defecationObject);
 		Digestion = 0;
+	}
+
+	void SpawnAttractor(GameObject gameObject)
+	{
+		gameObject = Instantiate(gameObject);
+		gameObject.transform.position = transform.position;
 	}
 
 	void Die()
 	{
-		// todo: spawn corpse
 		lice.Remove(this);
+		SpawnAttractor(corpseObject);
 		if (LouseCount == 0) OnGameOver?.Invoke();
 		else lice[LouseCount].IsPlayer = true;
 		Destroy(gameObject);
