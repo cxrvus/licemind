@@ -6,12 +6,14 @@ using UnityEngine;
 public class LouseStats : MonoBehaviour
 {
 	static readonly List<LouseStats> lice = new ();
-	public static int LouseCount { get { return lice.Count; } }
+	public static int LouseCount { get => lice.Count; }
 
 	public static LouseStats PlayerStats { get; private set; }
 	bool _isPlayer;
-	public bool IsPlayer { get { return _isPlayer; }
-	set {
+	public bool IsPlayer 
+	{
+		set
+		{
 			if (!value) throw new ArgumentOutOfRangeException("Can only set IsPlayer to true");
 			if (PlayerStats) PlayerStats._isPlayer = false;
 			_isPlayer = true;
@@ -19,6 +21,7 @@ public class LouseStats : MonoBehaviour
 			OnSwitchPlayer?.Invoke();
 			OnUpdateStats?.Invoke();
 		}
+		get => _isPlayer;
 	}
 	public static event Action OnSwitchPlayer;
 	public static event Action OnUpdateStats;
@@ -27,13 +30,13 @@ public class LouseStats : MonoBehaviour
 
 	int _energy;
 	public int EnergyCap { get; private set; }
-	public int Energy { get { return _energy; } set { _energy = Math.Clamp(value, 0, EnergyCap); UpdateStats(); } }
+	public int Energy { get => _energy; set { _energy = Math.Clamp(value, 0, EnergyCap); UpdateStats(); } }
 
 	public int Strength { get; private set; }
 
 	public int Speed { get; private set; }
 	LouseMovement _movement;
-	bool IsMoving { get { return _movement.IsMoving; } }
+	bool IsMoving { get => _movement.IsMoving; }
 
 
 	void Start()
@@ -74,9 +77,7 @@ public class LouseStats : MonoBehaviour
 
 	void DeathCheck()
 	{
-		if (Energy == 0) {
-			Die();
-		}
+		if (Energy == 0) Die();
 	}
 
 	void Die()

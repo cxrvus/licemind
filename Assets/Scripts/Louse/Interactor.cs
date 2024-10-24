@@ -8,7 +8,7 @@ public class Interactor : MonoBehaviour
 	LouseStats _stats;
 	LouseAnimator animator;
 
-	bool IsPlayer { get { return _stats.IsPlayer; } }
+	bool IsPlayer { get => _stats.IsPlayer; }
 
 	void Awake()
 	{
