@@ -4,8 +4,7 @@ public class Artery : Interactive
 
 	void Awake()
 	{
-		durability = GetComponent<Durability>();
-		durability.Setup(HairBaseStats.durabilityCap);
+		durability = new Durability(gameObject, HairBaseStats.durabilityCap);
 	}
 
 	public override void Interact(LouseStats interactor)

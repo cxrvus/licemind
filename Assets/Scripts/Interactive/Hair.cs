@@ -4,8 +4,7 @@ public class Hair : Interactive
 
 	void Awake()
 	{
-		durability = GetComponent<Durability>();
-		durability.Setup(HairBaseStats.durabilityCap);
+		durability = new Durability(gameObject, HairBaseStats.durabilityCap, 0.8f);
 	}
 
 	public override void Interact(LouseStats interactor)

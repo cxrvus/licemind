@@ -1,43 +1,38 @@
-using System;
 using UnityEngine;
 
-public class Durability : MonoBehaviour
+public class Durability
 {
-	int valueCap;
+	public readonly GameObject gameObject;
+	public readonly int valueCap;
+	public readonly float minTransp;
+	public SpriteRenderer Sprite { get; private set; }
+
 	public int Value { get; private set; }
-	bool isSetup;
 
-	SpriteRenderer sprite;
-
-	void Awake()
+	public Durability(GameObject gameObject, int valueCap = 1, float minTransp = default)
 	{
-		sprite = GetComponent<SpriteRenderer>();
-	}
-
-	public void Setup(int valueCap)
-	{
+		this.gameObject = gameObject;
 		this.valueCap = valueCap;
+		this.minTransp = minTransp;
+
 		Value = valueCap;
-		isSetup = true;
+		Sprite = gameObject.GetComponent<SpriteRenderer>();
 	}
 
 	public void Damage(int amount)
 	{
-		if (!isSetup) throw new Exception("Durability component needs to be set up before interaction");
-
 		Value -= amount;
 		SetTransparency();
-		if (Value <= 0) Destroy(gameObject);
+		if (Value <= 0) Object.Destroy(gameObject);
 	}
 
-	const float BASE_TRANSP = 0.8f;
-	const float TRANSP_FACTOR = 1f - BASE_TRANSP;
 	void SetTransparency()
 	{
-		var ratio = (float)Value / valueCap * TRANSP_FACTOR + BASE_TRANSP;
+		var transpFactor = 1f - minTransp;
+		var ratio = (float)Value / valueCap * transpFactor + minTransp;
 
-		var color = sprite.color;
+		var color = Sprite.color;
 		color.a = ratio;
-		sprite.color = color;
+		Sprite.color = color;
 	}
 }

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8310138327075025259}
   - component: {fileID: 7983322023292996014}
   - component: {fileID: 4224812917993309858}
-  - component: {fileID: 5475858677804043107}
   m_Layer: 0
   m_Name: Hair
   m_TagString: Untagged
@@ -150,15 +149,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   louseAnimation: {fileID: 7400000, guid: 316b0480aa1aac3ca99b46970ff5b96e, type: 2}
   promptPrefab: {fileID: 5372319149536365435, guid: 967d105ef341609b7897505564802cf0, type: 3}
---- !u!114 &5475858677804043107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769923587006817330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeebd9bc13616bef186c01e101aa17da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
