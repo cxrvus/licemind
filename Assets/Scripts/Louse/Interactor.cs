@@ -27,7 +27,6 @@ public class Interactor : MonoBehaviour
 		{
 			Vector2 direction = transform.rotation * Vector2.up;
 			direction.Normalize();
-			// TODO: add layers to make raycast ignore attractors
 			hitCollider = Physics2D.Raycast(transform.position, direction, 0.5f).collider;
 			newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
 
