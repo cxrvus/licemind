@@ -126,8 +126,14 @@ public class Louse : MonoBehaviour {
 	{
 		lice.Remove(this);
 		SpawnAttractor(corpseObject, true);
+
 		if (Count == 0) OnGameOver?.Invoke();
-		else lice[Count].IsPlayer = true;
+		else if (IsPlayer)
+		{
+			if (target) target.HidePrompt();
+			lice[Count-1].IsPlayer = true;
+		}
+
 		Destroy(gameObject);
 	}
 	#endregion
