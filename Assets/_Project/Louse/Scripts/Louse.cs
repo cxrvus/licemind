@@ -83,7 +83,6 @@ public class Louse : MonoBehaviour {
 		}
 	}
 
-
 	void Move() 
 	{
 		rb.linearVelocity = LouseStats.SPEED_FACTOR * baseStats.speed * Time.deltaTime * direction;
