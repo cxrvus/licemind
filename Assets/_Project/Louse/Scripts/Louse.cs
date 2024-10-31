@@ -109,12 +109,12 @@ public class Louse : MonoBehaviour {
 		}
 	}
 
-	void SpawnAttractor(GameObject prefab, bool inheritRotation = false)
+	GameObject SpawnAttractor(GameObject prefab)
 	{
 		var instance = Instantiate(prefab);
 		var position = new Vector3(transform.position.x, transform.position.y, -2); // todo: parameterize Z using static class values
 		instance.transform.position = position;
-		if (inheritRotation) instance.transform.rotation = transform.rotation;
+		return instance;
 	}
 
 	void Defecate()
@@ -126,7 +126,9 @@ public class Louse : MonoBehaviour {
 	void Die()
 	{
 		lice.Remove(this);
-		SpawnAttractor(corpseObject, true);
+
+		var corpse = SpawnAttractor(corpseObject);
+		corpse.transform.rotation = transform.rotation;
 
 		if (Count == 0) OnGameOver?.Invoke();
 		else if (IsPlayer)
