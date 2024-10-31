@@ -43,8 +43,9 @@ public class Louse : MonoBehaviour {
 
 	void Start()
 	{
-		if (!Player) IsPlayer = true;
 		lice.Add(this);
+
+		if (!Player) IsPlayer = true;
 
 		StartCoroutine(SetDirection());
 		StartCoroutine(CheckForInteraction());
@@ -139,9 +140,11 @@ public class Louse : MonoBehaviour {
 	#endregion
 
 	#region Player
+	public static event Action OnSwitchPlayer;
+
 	public static Louse Player { get; private set; }
 	bool _isPlayer;
-	public bool IsPlayer 
+	public bool IsPlayer
 	{
 		set
 		{
@@ -153,7 +156,6 @@ public class Louse : MonoBehaviour {
 		}
 		get => _isPlayer;
 	}
-	public static event Action OnSwitchPlayer;
 	#endregion
 
 	#region Animation
@@ -176,7 +178,8 @@ public class Louse : MonoBehaviour {
 	#region Interaction
 	Transform antenna;
 	Interactive target;
-	bool ShouldInteract { get => !IsPlayer || Input.GetKey(KeyCode.E); }
+	bool CanInteract { get => target && target.CanInteract(this); }
+	bool ShouldInteract { get => CanInteract && (!IsPlayer || Input.GetKey(KeyCode.E)); }
 
 	IEnumerator CheckForInteraction()
 	{
@@ -194,7 +197,7 @@ public class Louse : MonoBehaviour {
 
 			target = newTarget;
 
-			if(target && ShouldInteract)
+			if(ShouldInteract)
 			{
 				State = LouseState.Interacting;
 				target.HidePrompt();
