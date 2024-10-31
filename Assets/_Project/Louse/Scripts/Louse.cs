@@ -52,23 +52,24 @@ public class Louse : MonoBehaviour {
 		}
 	}
 
+	void SpawnAttractor(GameObject prefab, bool inheritRotation = false)
+	{
+		var instance = Instantiate(prefab);
+		var position = new Vector3(transform.position.x, transform.position.y, -2); // idea: parameterize Z using SO
+		instance.transform.position = position;
+		if (inheritRotation) instance.transform.rotation = transform.rotation;
+	}
+
 	void Defecate()
 	{
 		SpawnAttractor(defecationObject);
 		stats.Digestion = 0;
 	}
 
-	void SpawnAttractor(GameObject prefab)
-	{
-		var gameObject = Instantiate(prefab);
-		var position = new Vector3(transform.position.x, transform.position.y, -2); // idea: parameterize Z using SO
-		gameObject.transform.position = position;
-	}
-
 	void Die()
 	{
 		lice.Remove(this);
-		SpawnAttractor(corpseObject);
+		SpawnAttractor(corpseObject, true);
 		if (Count == 0) OnGameOver?.Invoke();
 		else lice[Count].IsPlayer = true;
 		Destroy(gameObject);
