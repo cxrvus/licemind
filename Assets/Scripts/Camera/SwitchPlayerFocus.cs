@@ -5,12 +5,12 @@ public class SwitchPlayerFocus : MonoBehaviour
 {
 	void Awake()
 	{
-		LouseStats.OnSwitchPlayer += SwitchFocus;
+		Louse.OnSwitchPlayer += SwitchFocus;
 	}
 
 	void SwitchFocus()
 	{
-		var playerTransform = LouseStats.PlayerStats.transform;
+		var playerTransform = Louse.Player.transform;
 		GetComponent<CinemachineVirtualCamera>().Follow = playerTransform;
 	}
 }

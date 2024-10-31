@@ -14,5 +14,5 @@ public abstract class Interactive : MonoBehaviour
 	public void ShowPrompt() { if (prompt) prompt.Show(true); }
 	public void HidePrompt() { if (prompt) prompt.Show(false); }
 
-	public abstract void Interact(LouseStats interactor);
+	public abstract void Interact(Louse interactor);
 }

@@ -16,12 +16,12 @@ public class PlayerStatsDisplay : MonoBehaviour
 
 	void UpdateStats()
 	{
-		var player = LouseStats.PlayerStats;
+		var stats = Louse.Player.stats;
 
-		energyDisplay.GetComponent<TMP_Text>().text = StatsText(player.Energy, player.EnergyCap, 2);
-		digestionDisplay.GetComponent<TMP_Text>().text = StatsText(player.Digestion, player.DigestionCap, 2);
-		ageDisplay.GetComponent<TMP_Text>().text = StatsText(player.Age, player.AgeCap, 2);
-		countDisplay.GetComponent<TMP_Text>().text = LouseStats.LouseCount.ToString().PadLeft(2, '0');
+		energyDisplay.GetComponent<TMP_Text>().text = StatsText(stats.Energy, stats.EnergyCap, 2);
+		digestionDisplay.GetComponent<TMP_Text>().text = StatsText(stats.Digestion, stats.DigestionCap, 2);
+		ageDisplay.GetComponent<TMP_Text>().text = StatsText(stats.Age, stats.AgeCap, 2);
+		countDisplay.GetComponent<TMP_Text>().text = Louse.Count.ToString().PadLeft(2, '0');
 	}
 
 	string StatsText(IFormattable current, IFormattable max, int width)

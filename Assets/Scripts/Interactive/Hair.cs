@@ -7,10 +7,11 @@ public class Hair : Interactive
 		durability = new Durability(gameObject, InteractiveBaseStats.durabilityCap, 0.8f);
 	}
 
-	public override void Interact(LouseStats interactor)
+	public override void Interact(Louse louse)
 	{
-		var strength = interactor.Strength;
-		interactor.Energy -= strength;
+		var stats = louse.stats;
+		var strength = stats.Strength;
+		stats.Energy -= strength;
 		durability.Damage(strength);
 	}
 }

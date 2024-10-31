@@ -1,7 +1,7 @@
 public class LouseInteractive : Interactive
 {
-	public override void Interact(LouseStats _)
+	public override void Interact(Louse louse)
 	{
-		GetComponent<LouseStats>().IsPlayer = true;
+		louse.IsPlayer = true;
 	}
 }

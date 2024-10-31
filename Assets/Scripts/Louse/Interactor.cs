@@ -3,18 +3,11 @@ using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
-	public bool IsInteracting { get; private set; }
+	Louse louse;
 
-	LouseStats _stats;
-	LouseAnimator animator;
-
-	bool IsPlayer { get => _stats.IsPlayer; }
-
-	void Awake()
+	void Start()
 	{
-		_stats = GetComponentInParent<LouseStats>();
-		animator = GetComponentInParent<LouseAnimator>();
-
+		louse = GetComponentInParent<Louse>();
 		StartCoroutine(InteractionCheck());
 	}
 
@@ -25,15 +18,14 @@ public class Interactor : MonoBehaviour
 
 		for(;;)
 		{
-			Vector2 direction = transform.rotation * Vector2.up;
-			direction.Normalize();
-			hitCollider = Physics2D.Raycast(transform.position, direction, 0.5f).collider;
+			var rayDirection = (transform.rotation * Vector2.up).normalized;
+			hitCollider = Physics2D.Raycast(transform.position, rayDirection, 0.5f).collider;
 			newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
 
 			if (newTarget != target)
 			{
 				if (target) target.HidePrompt();
-				if (newTarget && IsPlayer) newTarget.ShowPrompt();
+				if (newTarget && louse.IsPlayer) newTarget.ShowPrompt();
 			}
 
 			target = newTarget;
@@ -51,15 +43,14 @@ public class Interactor : MonoBehaviour
 
 	void StartInteraction(Interactive target)
 	{
-		IsInteracting = true;
-		animator.Interact(target);
+		louse.state = LouseState.Interacting;
+		louse.Play(target.louseAnimation.name);
 		target.HidePrompt();
-		target.Interact(_stats);
+		target.Interact(louse);
 	}
 
 	void StopInteraction(Interactive target)
 	{
-		IsInteracting = false;
-		if (IsPlayer) target.ShowPrompt();
-	}
-}
+		louse.state = LouseState.Idle;
+		if (louse.IsPlayer) target.ShowPrompt();
+	}}

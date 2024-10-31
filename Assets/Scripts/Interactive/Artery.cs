@@ -7,11 +7,12 @@ public class Artery : Interactive
 		durability = new Durability(gameObject, InteractiveBaseStats.durabilityCap);
 	}
 
-	public override void Interact(LouseStats interactor)
+	public override void Interact(Louse louse)
 	{
-		var strength = interactor.Strength;
-		interactor.Energy += strength * 2;
-		interactor.Digestion += InteractiveBaseStats.digestion;
+		var stats = louse.stats;
+		var strength = stats.Strength;
+		stats.Energy += strength * 2;
+		stats.Digestion += InteractiveBaseStats.digestion;
 		durability.Damage(strength);
 	}
 }

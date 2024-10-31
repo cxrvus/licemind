@@ -6,7 +6,7 @@ public class GameOverDisplay : MonoBehaviour
 
 	void Awake()
 	{
-		LouseStats.OnGameOver += Show;
+		Louse.OnGameOver += Show;
 	}
 
 	void Show()
