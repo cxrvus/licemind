@@ -135,7 +135,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2111821510, guid: ff0c7cbe32829edeeb343c0c46b98fb5, type: 3}
+  m_Sprite: {fileID: -718265621, guid: ff0c7cbe32829edeeb343c0c46b98fb5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -221,7 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15819e304dd969938e424894d1e923f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   defecationObject: {fileID: 1471740195546207452, guid: 87ae5caed30394dc5adfee3fb4dffcdf, type: 3}
   corpseObject: {fileID: 1471740195546207452, guid: 047575140f2c6b4f3b0c97deb5d2a43f, type: 3}
   baseStats: {fileID: 11400000, guid: bdc53372fed9488f997c8c3bb87a1bb9, type: 2}
