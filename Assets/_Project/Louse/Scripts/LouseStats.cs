@@ -46,11 +46,12 @@ public class LouseStats
 	}
 	#endregion
 
-	public void ProcessStats()
+	public void Advance()
 	{
-		var depletion = louse.IsPlayer ? louse.IsMoving ? @base.metabolismPlayerWalk : @base.metabolismPlayerIdle : @base.metabolismNpcIdle;
+		var walking = louse.State == LouseState.Walking;
+		var depletion = louse.IsPlayer ? walking ? @base.metabolismPlayerWalk : @base.metabolismPlayerIdle : @base.metabolismNpcIdle;
 		Energy -= depletion;
-		Digestion += louse.IsMoving ? @base.digestionWalk : @base.digestionIdle;
+		Digestion += walking ? @base.digestionWalk : @base.digestionIdle;
 		Age++;
 	}
 }

@@ -10,7 +10,19 @@ public enum LouseState {
 public class Louse : MonoBehaviour {
 	static readonly List<Louse> lice = new ();
 	public static int Count { get => lice.Count; }
-	public LouseState state = LouseState.Idle;
+
+	LouseState _state;
+	public LouseState State {
+		get => _state;
+		private set
+		{
+			if (_state != value)
+			{
+				_state = value;
+				UpdateAnimation();
+			}
+		}
+	}
 
 	public GameObject defecationObject;
 	public GameObject corpseObject;
@@ -34,9 +46,53 @@ public class Louse : MonoBehaviour {
 		if (!Player) IsPlayer = true;
 		lice.Add(this);
 
-		StartCoroutine(InteractionCheck());
+		StartCoroutine(SetDirection());
+		StartCoroutine(CheckForInteraction());
 		StartCoroutine(ProcessStats());
 	}
+
+	void FixedUpdate()
+	{
+		Move();
+	}
+
+	#region Movement
+	Rigidbody2D rb;
+	Vector2 direction;
+	bool IsMoving { get => direction.sqrMagnitude > 0; }
+
+	IEnumerator SetDirection()
+	{
+		for (;;)
+		{
+			if (State == LouseState.Interacting) direction = Vector3.zero;
+			else
+			{
+				if (IsPlayer)
+				{
+					State = IsMoving ? LouseState.Walking : LouseState.Idle;
+					direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
+					yield return null;
+				}
+				else yield return null;
+				// todo: else NpcMove();
+			}
+			
+			yield return null;
+		}
+	}
+
+
+	void Move() 
+	{
+		rb.linearVelocity = LouseStats.SPEED_FACTOR * baseStats.speed * Time.deltaTime * direction;
+		if(IsMoving)
+		{
+			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+			transform.rotation = Quaternion.Euler(0, 0, angle);
+		}
+	}
+	#endregion
 
 	#region Stats
 	public static event Action OnGameOver;
@@ -45,9 +101,9 @@ public class Louse : MonoBehaviour {
 	{
 		for(;;)
 		{
-			stats.ProcessStats();
+			stats.Advance();
 			if (stats.Energy == 0 || stats.Age >= stats.AgeCap) Die();
-			if (stats.Digestion >= stats.DigestionCap) Defecate();
+			else if (stats.Digestion >= stats.DigestionCap) Defecate();
 			yield return new WaitForSeconds(stats.Interval);
 		}
 	}
@@ -96,50 +152,33 @@ public class Louse : MonoBehaviour {
 
 	#region Animation
 	Animator animator;
-	public void Play(string anim, int layer = -1) => animator.Play(anim, layer);
-	// todo: automatically set animation based on state
-	#endregion
-
-	#region Movement
-	Rigidbody2D rb;
-	Vector2 direction;
-	public bool IsMoving { get => direction.sqrMagnitude > 0; }
-
-	void FixedUpdate() { Move(); }
-
-	void Move()
+	void UpdateAnimation()
 	{
-		if (state == LouseState.Interacting) return;
-
-		if (IsPlayer) PlayerMove();
-		// todo: else NpcMove();
-
-		rb.linearVelocity = LouseStats.SPEED_FACTOR * baseStats.speed * Time.deltaTime * direction;
-		if(IsMoving)
+		var animation = State switch
 		{
-			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
-			transform.rotation = Quaternion.Euler(0, 0, angle);
-			Play("Walk");
-		}
-		else Play("Idle");
+			LouseState.Idle => "Idle",
+			LouseState.Walking => "Walk",
+			LouseState.Interacting => target.louseAnimation.name,
+			_ => throw new NotImplementedException(),
+		};
+		
+		animator.Play(animation);
 	}
 
-	void PlayerMove() => direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
 	#endregion
 
 	#region Interaction
 	Transform antenna;
+	Interactive target;
+	bool ShouldInteract { get => !IsPlayer || Input.GetKey(KeyCode.E); }
 
-	IEnumerator InteractionCheck()
+	IEnumerator CheckForInteraction()
 	{
-		Interactive newTarget, target = null;
-		Collider2D hitCollider;
-
 		for(;;)
 		{
 			var rayDirection = (antenna.rotation * Vector2.up).normalized;
-			hitCollider = Physics2D.Raycast(antenna.position, rayDirection, 0.5f).collider;
-			newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
+			var hitCollider = Physics2D.Raycast(antenna.position, rayDirection, 0.5f).collider;
+			var newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
 
 			if (newTarget != target)
 			{
@@ -148,30 +187,23 @@ public class Louse : MonoBehaviour {
 			}
 
 			target = newTarget;
-			bool interactionKeyPressed = Input.GetKey(KeyCode.E);
 
-			if(interactionKeyPressed && target) 
+			if(target && ShouldInteract)
 			{
-				StartInteraction(target);
+				State = LouseState.Interacting;
+				target.HidePrompt();
+				target.Interact(this);
 				yield return new WaitForSeconds(1);
-				StopInteraction(target);
+
+				if(!ShouldInteract)
+				{
+					State = LouseState.Idle;
+					if (target && IsPlayer) target.ShowPrompt();
+				}
 			}
-			else yield return null;
+
+			yield return null;
 		}
-	}
-
-	void StartInteraction(Interactive target)
-	{
-		state = LouseState.Interacting;
-		Play(target.louseAnimation.name);
-		target.HidePrompt();
-		target.Interact(this);
-	}
-
-	void StopInteraction(Interactive target)
-	{
-		state = LouseState.Idle;
-		if (IsPlayer) target.ShowPrompt();
 	}
 	#endregion
 }
