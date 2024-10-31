@@ -10,8 +10,8 @@ public enum LouseState {
 public class Louse : MonoBehaviour {
 	static readonly List<Louse> lice = new ();
 	public static int Count { get => lice.Count; }
-
 	public LouseState state = LouseState.Idle;
+
 	public GameObject defecationObject;
 	public GameObject corpseObject;
 	public LouseBaseStats baseStats;
@@ -20,9 +20,10 @@ public class Louse : MonoBehaviour {
 	void Awake()
 	{
 		animator = GetComponent<Animator>();
+		antenna = transform.GetChild(0);
 		rb = GetComponent<Rigidbody2D>();
 
-		if(!(animator && rb)) throw new MissingComponentException();
+		if(!(animator && antenna && rb)) throw new MissingComponentException();
 		if(!baseStats) throw new MissingReferenceException();
 
 		stats = new LouseStats(this);
@@ -33,6 +34,7 @@ public class Louse : MonoBehaviour {
 		if (!Player) IsPlayer = true;
 		lice.Add(this);
 
+		StartCoroutine(InteractionCheck());
 		StartCoroutine(ProcessStats());
 	}
 
@@ -122,5 +124,53 @@ public class Louse : MonoBehaviour {
 	}
 
 	void PlayerMove() => direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
+	#endregion
+
+	#region Interaction
+	Transform antenna;
+
+	IEnumerator InteractionCheck()
+	{
+		Interactive newTarget, target = null;
+		Collider2D hitCollider;
+
+		for(;;)
+		{
+			var rayDirection = (antenna.rotation * Vector2.up).normalized;
+			hitCollider = Physics2D.Raycast(antenna.position, rayDirection, 0.5f).collider;
+			newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
+
+			if (newTarget != target)
+			{
+				if (target) target.HidePrompt();
+				if (newTarget && IsPlayer) newTarget.ShowPrompt();
+			}
+
+			target = newTarget;
+			bool interactionKeyPressed = Input.GetKey(KeyCode.E);
+
+			if(interactionKeyPressed && target) 
+			{
+				StartInteraction(target);
+				yield return new WaitForSeconds(1);
+				StopInteraction(target);
+			}
+			else yield return null;
+		}
+	}
+
+	void StartInteraction(Interactive target)
+	{
+		state = LouseState.Interacting;
+		Play(target.louseAnimation.name);
+		target.HidePrompt();
+		target.Interact(this);
+	}
+
+	void StopInteraction(Interactive target)
+	{
+		state = LouseState.Idle;
+		if (IsPlayer) target.ShowPrompt();
+	}
 	#endregion
 }

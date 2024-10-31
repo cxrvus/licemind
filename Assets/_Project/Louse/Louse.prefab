@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1805583893518565626}
-  - component: {fileID: 5711392389282402578}
   m_Layer: 0
   m_Name: Antenna
   m_TagString: Untagged
@@ -32,18 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3045026844609886304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5711392389282402578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2490079099564650676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07964e514932ab18a9e5458dc3e15622, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8157059490741848194
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15819e304dd969938e424894d1e923f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   defecationObject: {fileID: 1471740195546207452, guid: 87ae5caed30394dc5adfee3fb4dffcdf, type: 3}
   corpseObject: {fileID: 1471740195546207452, guid: 047575140f2c6b4f3b0c97deb5d2a43f, type: 3}
   baseStats: {fileID: 11400000, guid: bdc53372fed9488f997c8c3bb87a1bb9, type: 2}
