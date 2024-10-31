@@ -189,13 +189,9 @@ public class Louse : MonoBehaviour {
 			var hitCollider = Physics2D.Raycast(antenna.position, rayDirection, 0.5f).collider;
 			var newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
 
-			if (newTarget != target)
-			{
-				if (target) target.HidePrompt();
-				if (newTarget && IsPlayer) newTarget.ShowPrompt();
-			}
-
+			if (target && target != newTarget) target.HidePrompt();
 			target = newTarget;
+			if (IsPlayer && CanInteract) target.ShowPrompt();
 
 			if(ShouldInteract)
 			{
@@ -207,7 +203,7 @@ public class Louse : MonoBehaviour {
 				if(!ShouldInteract)
 				{
 					State = LouseState.Idle;
-					if (target && IsPlayer) target.ShowPrompt();
+					if (IsPlayer && target) target.ShowPrompt();
 				}
 			}
 
