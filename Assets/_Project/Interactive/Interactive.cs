@@ -2,13 +2,20 @@ using UnityEngine;
 
 public abstract class Interactive : MonoBehaviour
 {
-	public AnimationClip louseAnimation;
-	public GameObject promptPrefab;
+	public InteractiveStats stats;
+	protected Durability durability;
 	InteractivePrompt prompt;
 
 	void Start()
 	{
-		if (promptPrefab) prompt = Instantiate(promptPrefab, transform).GetComponent<InteractivePrompt>();
+		if (stats)
+		{
+			var prefab = stats.promptPrefab;
+			if (prefab) prompt = Instantiate(prefab, transform).GetComponent<InteractivePrompt>();
+
+			var durabilityValue = stats.durability;
+			if (durabilityValue > 0) durability = new Durability(gameObject, durabilityValue, stats.minTransparency);
+		}
 	}
 
 	public void ShowPrompt() { if (prompt) prompt.Show(true); }

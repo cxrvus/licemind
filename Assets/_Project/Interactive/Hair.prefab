@@ -147,5 +147,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ac385babc506d6baff0084a29794de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  louseAnimation: {fileID: 7400000, guid: 316b0480aa1aac3ca99b46970ff5b96e, type: 2}
-  promptPrefab: {fileID: 5372319149536365435, guid: 967d105ef341609b7897505564802cf0, type: 3}
+  stats: {fileID: 11400000, guid: 1748d74f04dc05d58970255195ad316e, type: 2}

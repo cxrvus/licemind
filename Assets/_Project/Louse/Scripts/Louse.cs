@@ -165,7 +165,7 @@ public class Louse : MonoBehaviour {
 		{
 			LouseState.Idle => "Idle",
 			LouseState.Walking => "Walk",
-			LouseState.Interacting => target.louseAnimation.name,
+			LouseState.Interacting => target.stats.louseAnimation.name,
 			_ => throw new NotImplementedException(),
 		};
 		
@@ -197,7 +197,7 @@ public class Louse : MonoBehaviour {
 				State = LouseState.Interacting;
 				target.HidePrompt();
 				target.Interact(this);
-				yield return new WaitForSeconds(1);
+				yield return new WaitForSeconds(target.stats.duration);
 
 				if(!ShouldInteract)
 				{

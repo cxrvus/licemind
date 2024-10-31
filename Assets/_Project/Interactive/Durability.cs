@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class Durability
 {
@@ -7,10 +9,13 @@ public class Durability
 	public readonly float minTransp;
 	public SpriteRenderer Sprite { get; private set; }
 
-	public int Value { get; private set; }
+	int _value;
+	public int Value { get => _value; private set => _value = Math.Clamp(value, 0, valueCap); }
 
-	public Durability(GameObject gameObject, int valueCap = 1, float minTransp = default)
+	public Durability(GameObject gameObject, int valueCap, float minTransp)
 	{
+		if (valueCap <= 0) throw new ArgumentOutOfRangeException();
+
 		this.gameObject = gameObject;
 		this.valueCap = valueCap;
 		this.minTransp = minTransp;
