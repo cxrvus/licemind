@@ -104,6 +104,7 @@ public class Louse : MonoBehaviour {
 			stats.Advance();
 			if (stats.Energy == 0 || stats.Age >= stats.AgeCap) Die();
 			else if (stats.Digestion >= stats.DigestionCap) Defecate();
+			// todo: add stat indicators (icons that blink proportional to urgency)
 			yield return new WaitForSeconds(stats.Interval);
 		}
 	}
@@ -111,7 +112,7 @@ public class Louse : MonoBehaviour {
 	void SpawnAttractor(GameObject prefab, bool inheritRotation = false)
 	{
 		var instance = Instantiate(prefab);
-		var position = new Vector3(transform.position.x, transform.position.y, -2); // idea: parameterize Z using SO
+		var position = new Vector3(transform.position.x, transform.position.y, -2); // todo: parameterize Z using static class values
 		instance.transform.position = position;
 		if (inheritRotation) instance.transform.rotation = transform.rotation;
 	}
