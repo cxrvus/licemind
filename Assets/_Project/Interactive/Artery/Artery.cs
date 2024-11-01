@@ -4,7 +4,7 @@ public class Artery : Interactive
 
 	protected override void OnInteract(Louse louse)
 	{
-		louse.stats.Digestion += DIGESTION;
+		louse.Stats.Digestion += DIGESTION;
 		durability.Damage();
 	}
 }

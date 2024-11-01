@@ -16,7 +16,7 @@ public class PlayerStatsDisplay : MonoBehaviour
 
 	void UpdateStats()
 	{
-		var stats = Louse.Player.stats;
+		var stats = Louse.Player.Stats;
 
 		// todo: use a prefab and SO for stat displays
 		energyDisplay.GetComponent<TMP_Text>().text = StatsText(stats.Energy, stats.EnergyCap, 2);

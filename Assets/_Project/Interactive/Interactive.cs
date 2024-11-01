@@ -24,7 +24,7 @@ public abstract class Interactive : MonoBehaviour
 
 	public void Interact(Louse louse)
 	{
-		louse.stats.Energy -= stats.effort;
+		louse.Stats.Energy -= stats.effort;
 		OnInteract(louse);
 	}
 

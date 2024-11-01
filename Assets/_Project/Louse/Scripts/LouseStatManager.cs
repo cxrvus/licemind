@@ -8,22 +8,22 @@ public partial class Louse
 	public GameObject corpseObject;
 
 	public LouseBaseStats baseStats;
-	public LouseStats stats;
+	public LouseStats Stats { get; private set; }
 
 	public static event Action OnGameOver;
 
-	void SetupStats() => stats = new LouseStats(this);
+	void SetupStats() => Stats = new LouseStats(this);
 
 	IEnumerator ProcessStats()
 	{
 		for(;;)
 		{
-			stats.Advance();
-			if (stats.Energy == 0 || stats.Age >= stats.AgeCap) Die();
-			else if (stats.Digestion >= stats.DigestionCap) Defecate();
+			Stats.Advance();
+			if (Stats.Energy == 0 || Stats.Age >= Stats.AgeCap) Die();
+			else if (Stats.Digestion >= Stats.DigestionCap) Defecate();
 			// todo: add stat indicators (icons that blink proportional to urgency)
 			// todo: implement blood icon transparency
-			yield return new WaitForSeconds(stats.Interval);
+			yield return new WaitForSeconds(Stats.Interval);
 		}
 	}
 
@@ -38,7 +38,7 @@ public partial class Louse
 	void Defecate()
 	{
 		SpawnAttractor(defecationObject);
-		stats.Digestion = 0;
+		Stats.Digestion = 0;
 	}
 
 	void Die()
