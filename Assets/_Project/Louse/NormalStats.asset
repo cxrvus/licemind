@@ -21,5 +21,4 @@ MonoBehaviour:
   digestionWalk: 1
   digestionIdle: 2
   ageCap: 60
-  strength: 5
   speed: 5

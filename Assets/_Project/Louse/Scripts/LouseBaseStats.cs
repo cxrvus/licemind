@@ -15,6 +15,5 @@ public class LouseBaseStats : ScriptableObject
 	public int digestionIdle;
 
 	public int ageCap;
-	public int strength;
 	public int speed;
 }

@@ -10,4 +10,5 @@ public class InteractiveStats : ScriptableObject
 	public int durability;
 	[Range(0f, 1f)]
 	public float minTransparency;
+	public int effort;
 }

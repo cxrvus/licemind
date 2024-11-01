@@ -4,11 +4,11 @@ using UnityEngine;
 public class LouseInteractive : Interactive
 {
 	public override bool CanInteract(Louse other) => other.IsPlayer;
-	public override void Interact(Louse _) => StartCoroutine(SwitchPlayer());
+	protected override void OnInteract(Louse _) => StartCoroutine(SwitchPlayer());
 	
 	IEnumerator SwitchPlayer()
 	{
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(stats.duration);
 		GetComponent<Louse>().IsPlayer = true;
 	}
 }

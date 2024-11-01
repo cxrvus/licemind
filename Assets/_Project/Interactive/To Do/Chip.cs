@@ -4,7 +4,7 @@ public class Chip : Interactive
 {
 	//todo: implement
 	public override bool CanInteract(Louse louse) => true;
-	public override void Interact(Louse louse)
+	protected override void OnInteract(Louse louse)
 	{
 		throw new System.NotImplementedException();
 	}

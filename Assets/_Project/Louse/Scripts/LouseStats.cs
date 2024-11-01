@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class LouseStats
 {
@@ -20,7 +17,6 @@ public class LouseStats
 	public int DigestionCap { get => @base.digestionCap; }
 	public int Digestion { get => _digestion; set { _digestion = Math.Clamp(value, 0, DigestionCap); UpdateStats(); } }
 
-	public int Strength { get => @base.strength; }
 	public int Speed { get => @base.speed; }
 	public int Interval { get => @base.updateInterval; }
 	#endregion

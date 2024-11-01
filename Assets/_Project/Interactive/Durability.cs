@@ -24,7 +24,7 @@ public class Durability
 		Sprite = gameObject.GetComponent<SpriteRenderer>();
 	}
 
-	public void Damage(int amount)
+	public void Damage(int amount = 1)
 	{
 		Value -= amount;
 		SetTransparency();

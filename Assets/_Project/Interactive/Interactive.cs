@@ -21,6 +21,12 @@ public abstract class Interactive : MonoBehaviour
 	public void ShowPrompt() { if (prompt) prompt.Show(true); }
 	public void HidePrompt() { if (prompt) prompt.Show(false); }
 
-	public abstract void Interact(Louse louse);
+	public void Interact(Louse louse)
+	{
+		louse.stats.Energy -= stats.effort;
+		OnInteract(louse);
+	}
+
+	protected abstract void OnInteract(Louse louse);
 	public virtual bool CanInteract(Louse louse) => true;
 }
