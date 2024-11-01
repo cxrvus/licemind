@@ -11,7 +11,7 @@ public class LouseBaseStats : ScriptableObject
 	public int metabolismPlayerWalk;
 
 	public int digestionCap;
-	public int digestionWalk;
+	public int digestionWork;
 	public int digestionIdle;
 
 	public int ageCap;

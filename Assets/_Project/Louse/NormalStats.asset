@@ -18,7 +18,7 @@ MonoBehaviour:
   metabolismPlayerIdle: 2
   metabolismPlayerWalk: 3
   digestionCap: 99
-  digestionWalk: 1
+  digestionWork: 1
   digestionIdle: 2
   ageCap: 60
   speed: 5

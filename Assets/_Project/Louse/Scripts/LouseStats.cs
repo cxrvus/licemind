@@ -39,9 +39,10 @@ public class LouseStats
 	public void Advance()
 	{
 		var walking = louse.State == LouseState.Walking;
+		var interacting = louse.State == LouseState.Interacting;
 		var depletion = louse.IsPlayer ? walking ? @base.metabolismPlayerWalk : @base.metabolismPlayerIdle : @base.metabolismNpcIdle;
 		Energy -= depletion;
-		Digestion += walking ? @base.digestionWalk : @base.digestionIdle;
+		Digestion += walking || interacting ? @base.digestionWork : @base.digestionIdle;
 		Age++;
 	}
 }
