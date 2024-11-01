@@ -2,9 +2,6 @@ using System;
 
 public class LouseStats
 {
-	#region Stat Properties
-	public const float SPEED_FACTOR = 100;
-
 	int _energy;
 	public int EnergyCap { get => @base.energyCap; }
 	public int Energy { get => _energy; set { _energy = Math.Clamp(value, 0, EnergyCap); UpdateStats(); } }
@@ -19,9 +16,7 @@ public class LouseStats
 
 	public int Speed { get => @base.speed; }
 	public int Interval { get => @base.updateInterval; }
-	#endregion
 
-	#region Setup
 	readonly Louse louse;
 	readonly LouseBaseStats @base;
 	public static event Action OnUpdateStats;
@@ -40,7 +35,6 @@ public class LouseStats
 		Energy = EnergyCap;
 		Louse.OnSwitchPlayer += UpdateStats;
 	}
-	#endregion
 
 	public void Advance()
 	{
