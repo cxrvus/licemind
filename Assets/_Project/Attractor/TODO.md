@@ -1,2 +1,2 @@
 todo: add pheromone
-todo: implement attractor decay
+todo: implement attractor decay & regeneration

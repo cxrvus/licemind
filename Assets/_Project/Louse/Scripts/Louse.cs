@@ -105,6 +105,7 @@ public class Louse : MonoBehaviour {
 			if (stats.Energy == 0 || stats.Age >= stats.AgeCap) Die();
 			else if (stats.Digestion >= stats.DigestionCap) Defecate();
 			// todo: add stat indicators (icons that blink proportional to urgency)
+			// todo: implement blood icon transparency
 			yield return new WaitForSeconds(stats.Interval);
 		}
 	}
