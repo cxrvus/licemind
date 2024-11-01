@@ -20,5 +20,5 @@ MonoBehaviour:
   digestionCap: 99
   digestionWork: 1
   digestionIdle: 2
-  ageCap: 60
+  ageCap: 99
   speed: 5
