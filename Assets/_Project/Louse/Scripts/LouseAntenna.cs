@@ -5,6 +5,7 @@ public partial class Louse
 {
 	Transform antenna;
 	Interactive target;
+
 	bool CanInteract { get => target && target.CanInteract(this); }
 	bool ShouldInteract { get => CanInteract && (!IsPlayer || Input.GetKey(KeyCode.E)); }
 
@@ -23,15 +24,13 @@ public partial class Louse
 			if(ShouldInteract)
 			{
 				State = LouseState.Interacting;
+
 				target.HidePrompt();
 				target.Interact(this);
+
 				yield return new WaitForSeconds(target.stats.duration);
 
-				if(!ShouldInteract)
-				{
-					State = LouseState.Idle;
-					if (IsPlayer && target) target.ShowPrompt();
-				}
+				State = LouseState.Idle;
 			}
 
 			yield return null;
