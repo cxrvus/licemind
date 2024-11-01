@@ -18,6 +18,7 @@ public abstract class Interactive : MonoBehaviour
 		}
 	}
 
+	// idea: add cost indicator to prompt
 	public void ShowPrompt() { if (prompt) prompt.Show(true); }
 	public void HidePrompt() { if (prompt) prompt.Show(false); }
 
