@@ -7,6 +7,7 @@ public enum LouseState {
 	Idle, Walking, Interacting
 }
 
+// todo: break up into partial classes
 public class Louse : MonoBehaviour {
 	static readonly List<Louse> lice = new ();
 	public static int Count { get => lice.Count; }
