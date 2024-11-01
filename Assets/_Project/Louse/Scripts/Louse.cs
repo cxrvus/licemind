@@ -112,7 +112,7 @@ public class Louse : MonoBehaviour {
 	GameObject SpawnAttractor(GameObject prefab)
 	{
 		var instance = Instantiate(prefab);
-		var position = new Vector3(transform.position.x, transform.position.y, -2); // todo: parameterize Z using static class values
+		var position = new Vector3(transform.position.x, transform.position.y, Layers.ATTRACTOR);
 		instance.transform.position = position;
 		return instance;
 	}
