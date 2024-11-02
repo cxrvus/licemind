@@ -7,22 +7,19 @@ public partial class Louse
 
 	public static Louse Player { get; private set; }
 	bool _isPlayer;
-	public bool IsPlayer
+	public bool IsPlayer { get => _isPlayer; }
+	public void BecomePlayer()
 	{
-		set
-		{
-			if (!value) throw new ArgumentOutOfRangeException("Can only set IsPlayer to true");
-			if (Player) Player._isPlayer = false;
-			_isPlayer = true;
-			Player = this;
-			OnSwitchPlayer?.Invoke();
-		}
-		get => _isPlayer;
+		if (Player) Player._isPlayer = false;
+		_isPlayer = true;
+		Player = this;
+
+		OnSwitchPlayer?.Invoke();
 	}
 
 	void SetupPlayer()
 	{
-		if (!Player) IsPlayer = true;
+		if (!Player) BecomePlayer();
 	}
 
 

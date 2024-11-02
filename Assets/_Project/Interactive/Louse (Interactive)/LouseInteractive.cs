@@ -7,6 +7,6 @@ public class LouseInteractive : Interactive
 	protected override IEnumerator Interaction(Louse _) {
 		// cool-down before new player can continue:
 		yield return new WaitForSeconds(stats.duration);
-		GetComponent<Louse>().IsPlayer = true;
+		GetComponent<Louse>().BecomePlayer();
 	}
 }
