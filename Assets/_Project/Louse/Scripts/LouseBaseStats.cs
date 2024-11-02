@@ -3,12 +3,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LouseBaseStats", menuName = "Louse/BaseStats")]
 public class LouseBaseStats : ScriptableObject
 {
-	public int updateInterval;
+	public float updateInterval;
+	public float walkInterval;
 
 	public int energyCap;
-	public int metabolismNpcIdle;
-	public int metabolismPlayerIdle;
-	public int metabolismPlayerWalk;
+
+	public int npcMetabolismIdle;
+	public int playerMetabolismIdle;
+	public int playerMetabolismWalk;
 
 	public int digestionCap;
 	public int digestionWork;

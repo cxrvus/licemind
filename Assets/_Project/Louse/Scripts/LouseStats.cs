@@ -17,7 +17,8 @@ public class LouseStats
 	// todo: louse size proportional to Age
 	// todo: Speed anti-proportional to Age
 	public int Speed { get => @base.speed; }
-	public int Interval { get => @base.updateInterval; }
+	public float UpdateInterval { get => @base.updateInterval; }
+	public float WalkInterval { get => @base.walkInterval; }
 
 	// idea: re-add Strength stat, proportional to Age
 
@@ -45,7 +46,7 @@ public class LouseStats
 		// idea: instead of this being checked every *Interval*, make it fill up *buckets* and process stats on overflow
 		var walking = louse.State == LouseState.Walking;
 		var interacting = louse.State == LouseState.Interacting;
-		var depletion = louse.IsPlayer ? walking ? @base.metabolismPlayerWalk : @base.metabolismPlayerIdle : @base.metabolismNpcIdle;
+		var depletion = louse.IsPlayer ? walking ? @base.playerMetabolismWalk : @base.playerMetabolismIdle : @base.npcMetabolismIdle;
 		Energy -= depletion;
 		Digestion += walking || interacting ? @base.digestionWork : @base.digestionIdle;
 		Age++;

@@ -19,10 +19,23 @@ public partial class Louse
 				{
 					State = IsMoving ? LouseState.Walking : LouseState.Idle;
 					direction = GetPlayerDirection();
-					yield return null;
 				}
-				else yield return null;
-				// todo: else NpcMove();
+				else 
+				{
+					// todo: attractors
+					if (State == LouseState.Idle)
+					{
+						State = LouseState.Walking;
+						direction = Random.onUnitSphere;
+					}
+					else
+					{
+
+						State = LouseState.Idle;
+						direction = Vector3.zero;
+					}
+					yield return new WaitForSeconds(Stats.WalkInterval);
+				}
 			}
 			
 			yield return null;

@@ -23,7 +23,7 @@ public partial class Louse
 			else if (Stats.Digestion >= Stats.DigestionCap) Defecate();
 			// todo: add stat indicators (icons that blink proportional to urgency)
 			// todo: implement blood layer transparency
-			yield return new WaitForSeconds(Stats.Interval);
+			yield return new WaitForSeconds(Stats.WalkInterval);
 		}
 	}
 
