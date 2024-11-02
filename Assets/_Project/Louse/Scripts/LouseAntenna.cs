@@ -6,9 +6,6 @@ public partial class Louse
 	Transform antenna;
 	Interactive target;
 
-	bool CanInteract { get => target && target.CanInteract(this); }
-	bool ShouldInteract { get => CanInteract && (!IsPlayer || Input.GetKey(KeyCode.E)); }
-
 	IEnumerator CheckForInteraction()
 	{
 		for(;;)
@@ -18,22 +15,41 @@ public partial class Louse
 			var newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
 
 			if (target && target != newTarget) target.HidePrompt();
+
 			target = newTarget;
-			if (IsPlayer && CanInteract) target.ShowPrompt();
 
-			if(ShouldInteract)
+			if (target)
 			{
-				State = LouseState.Interacting;
+				var canInteract = CanInteract(target);
+				if (IsPlayer && canInteract) target.ShowPrompt();
 
-				target.HidePrompt();
-				target.Interact(this);
-
-				yield return new WaitForSeconds(target.stats.duration);
-
-				State = LouseState.Idle;
+				if (canInteract && ShouldInteract(target))
+				{
+					State = LouseState.Interacting;
+					Interact(target);
+					yield return new WaitForSeconds(target.stats.duration);
+					State = LouseState.Idle;
+				}
 			}
 
 			yield return null;
 		}
+	}
+
+	void Interact(Interactive target)
+	{
+		Stats.Energy -= target.stats.effort;
+		target.Interact(this);
+	}
+
+	bool CanInteract(Interactive target) 
+	{
+		return Stats.Energy > target.stats.effort && target.CanInteract(this);
+	}
+
+	// todo: flesh out check for Npc (better than just !IsPlayer)
+	bool ShouldInteract(Interactive _)
+	{
+		return !IsPlayer || Input.GetKey(KeyCode.E);
 	}
 }

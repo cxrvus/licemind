@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 
-public abstract class Interactive : MonoBehaviour
+public class Interactive : MonoBehaviour
 {
 	public InteractiveStats stats;
 	protected Durability durability;
@@ -19,15 +20,21 @@ public abstract class Interactive : MonoBehaviour
 	}
 
 	// idea: add cost indicator to prompt
+	// idea: add action name indicator to prompt
 	public void ShowPrompt() { if (prompt) prompt.Show(true); }
 	public void HidePrompt() { if (prompt) prompt.Show(false); }
 
 	public void Interact(Louse louse)
 	{
-		louse.Stats.Energy -= stats.effort;
-		OnInteract(louse);
+		HidePrompt();
+		durability?.Damage();
+		StartCoroutine(Interaction(louse));
 	}
 
-	protected abstract void OnInteract(Louse louse);
 	public virtual bool CanInteract(Louse louse) => true;
+
+	protected virtual IEnumerator Interaction(Louse louse)
+	{
+		yield return null;
+	}
 }

@@ -1,10 +1,12 @@
+using System.Collections;
+
 public class Artery : Interactive
 {
 	const int DIGESTION = 5;
 
-	protected override void OnInteract(Louse louse)
+	protected override IEnumerator Interaction(Louse louse) 
 	{
 		louse.Stats.Digestion += DIGESTION;
-		durability.Damage();
+		yield return null;
 	}
 }
