@@ -26,11 +26,12 @@ public partial class Louse
 					if (State == LouseState.Idle)
 					{
 						State = LouseState.Walking;
-						direction = Random.onUnitSphere;
+						var randomDir = Random.onUnitSphere;
+						randomDir.z = 0;
+						direction = randomDir.normalized;
 					}
 					else
 					{
-
 						State = LouseState.Idle;
 						direction = Vector3.zero;
 					}
