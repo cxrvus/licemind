@@ -1,18 +1,24 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public partial class Louse
 {
+	const float SPEED_FACTOR = 100;
 	Rigidbody2D rb;
 	Vector2 direction;
 	bool IsMoving { get => direction.sqrMagnitude > 0; }
-	const float SPEED_FACTOR = 100;
+	Vector3 Zero { get => Vector3.zero; }
 
 	IEnumerator SetDirection()
 	{
 		for (;;)
 		{
-			if (State == LouseState.Interacting) direction = Vector3.zero;
+			if (State == LouseState.Interacting)
+			{
+				direction = Zero;
+			}
 			else
 			{
 				if (IsPlayer)

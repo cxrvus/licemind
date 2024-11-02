@@ -14,6 +14,8 @@ public partial class Louse
 		_isPlayer = true;
 		Player = this;
 
+		State = LouseState.Idle;
+
 		OnSwitchPlayer?.Invoke();
 	}
 
