@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LouseState { Idle, Walking, Interacting }
 
 public partial class Louse : MonoBehaviour {
 	static readonly List<Louse> lice = new ();
 	public static int Count { get => lice.Count; }
 	static int _idIncrementor;
 	public int Id { get; private set; }
+
+	LouseAI ai;
 
 	void Awake()
 	{
@@ -19,16 +22,25 @@ public partial class Louse : MonoBehaviour {
 
 		Id = _idIncrementor;
 		_idIncrementor++;
+
 		lice.Add(this);
 	}
 
 	void Start()
 	{
 		SetupStats();
+		ai = new LouseAI(this);
 		SetupPlayer();
-		SetupMovement();
 
 		StartCoroutine(CheckForInteraction());
 		StartCoroutine(ProcessStats());
 	}
+
+	void Update()
+	{
+		if (IsPlayer) PlayerMovement();
+		else ai.Tick();
+	}
+
+	void FixedUpdate() => Move();
 }

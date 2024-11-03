@@ -6,16 +6,7 @@ public partial class Louse
 	Transform antenna;
 	Interactive target;
 	
-	bool _isInteracting;
-	public bool IsInteracting
-	{
-		get => _isInteracting;
-		private set
-		{
-			_isInteracting = value;
-			if (value) AnimateInteraction();
-		}
-	}
+	public bool IsInteracting { get; private set; }
 
 	IEnumerator CheckForInteraction()
 	{

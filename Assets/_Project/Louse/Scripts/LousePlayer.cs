@@ -10,19 +10,15 @@ public partial class Louse
 	public bool IsPlayer { get => _isPlayer; }
 	public void BecomePlayer()
 	{
-		if (npcMovement != null) StopCoroutine(npcMovement);
 		if (Player) Player.BecomeNpc();
 		Player = this;
 		_isPlayer = true;
-		AnimateIdle();
+		ai.Reset();
+		Animate(LouseState.Idle);
 		OnSwitchPlayer?.Invoke();
 	}
 
-	void BecomeNpc()
-	{
-		npcMovement = Player.StartCoroutine(NpcMovement());
-		_isPlayer = false;
-	}
+	void BecomeNpc() => _isPlayer = false;
 
 	void SetupPlayer()
 	{
