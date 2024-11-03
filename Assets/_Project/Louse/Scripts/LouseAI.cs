@@ -6,6 +6,7 @@ public partial class Louse
 {
 	Timer walkTimer;
 	Timer interactionTimer;
+	Timer pheromoneCooldown;
 
 	LState _state;
 	public LState State
@@ -19,34 +20,42 @@ public partial class Louse
 	}
 	LState? nextState;
 
-	void SetupAi()
-	{
-		walkTimer = new Timer(cyclic: true, Stats.WalkInterval);
-		interactionTimer = new Timer(cyclic: true);
-	}
-
 	IEnumerator Loop()
 	{
+		walkTimer = new Timer(true, Stats.WalkInterval);
+		interactionTimer = new Timer(false);
+		pheromoneCooldown = new Timer(false, 1);
+
 		for (;;)
 		{
-			Tick();
+			if (State == LState.Interacting)
+			{
+				if (interactionTimer.PopOrPush()) nextState = LState.Idle;
+			}
+			else if (InteractionCheck()) Interact();
+			else if (IsPlayer) PlayerTick();
+			else NpcMovement();
+
+			if (State != nextState) State = nextState ?? State;
+			nextState = null;
+
 			yield return null;
 		}
 	}
 
-    void Tick()
+	void PlayerTick()
 	{
-		if (State == LState.Interacting)
+		// todo: add cost
+		// todo: LouseBaseStat for cost and cool-down duration
+		// TODO: implement using Timer.IsRunning (2x)
+		if (pheromoneCooldown.Elapsed > 0) pheromoneCooldown.PopOrPush();
+		else if (Input.GetKey(KeyCode.Q))
 		{
-			if (interactionTimer.PopOrPush()) nextState = LState.Idle;
-			else {}
+			attractors.pheromone.SpawnAt(transform);
+			pheromoneCooldown.Push();
 		}
-		else if (InteractionCheck()) Interact();
-		else if (IsPlayer) PlayerMovement();
-		else NpcMovement();
 
-		if (State != nextState) State = nextState ?? State;
-		nextState = null;
+		PlayerMovement();
 	}
 
 	void Interact()

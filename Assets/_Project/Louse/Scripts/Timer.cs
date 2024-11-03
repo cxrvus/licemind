@@ -35,12 +35,16 @@ public class Timer
 		if (Max == 0) throw new InvalidOperationException();
 		if (Elapsed >= Max)
 		{
-			if (cyclic) Elapsed -= Max;
+			if (cyclic) Elapsed %= Max;
 			else Reset();
 			return true;
 		}
 		else return false;
 	}
+
+	// TODO: add IsRunning and automatically increment Timer using Coroutine
+	// => methods: Start, Stop, Reset, Pop (= IsFinished && Reset)
+	// => properties: IsRunning, IsFinished
 	public bool PopOrPush()
 	{
 		if (Pop()) return true;

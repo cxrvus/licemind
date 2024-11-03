@@ -31,7 +31,6 @@ public partial class Louse : MonoBehaviour {
 	{
 		SetupStats();
 		SetupPlayer();
-		SetupAi();
 
 		StartCoroutine(Loop());
 		StartCoroutine(ProcessStats());
