@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NormalStats
   m_EditorClassIdentifier: 
   updateInterval: 1
-  walkInterval: 0.5
+  walkInterval: 0.25
   energyCap: 99
   npcMetabolismIdle: 1
   playerMetabolismIdle: 2

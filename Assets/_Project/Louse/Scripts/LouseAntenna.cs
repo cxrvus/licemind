@@ -5,6 +5,17 @@ public partial class Louse
 {
 	Transform antenna;
 	Interactive target;
+	
+	bool _isInteracting;
+	public bool IsInteracting
+	{
+		get => _isInteracting;
+		private set
+		{
+			_isInteracting = value;
+			if (value) AnimateInteraction();
+		}
+	}
 
 	IEnumerator CheckForInteraction()
 	{
@@ -25,10 +36,9 @@ public partial class Louse
 
 				if (canInteract && ShouldInteract(target))
 				{
-					State = LouseState.Interacting;
 					Interact(target);
 					yield return new WaitForSeconds(target.stats.duration);
-					State = LouseState.Idle;
+					IsInteracting = false;
 				}
 			}
 
@@ -38,6 +48,7 @@ public partial class Louse
 
 	void Interact(Interactive target)
 	{
+		IsInteracting = true;
 		Stats.Energy -= target.stats.effort;
 		target.Interact(this);
 	}

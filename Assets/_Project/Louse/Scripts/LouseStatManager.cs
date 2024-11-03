@@ -52,7 +52,7 @@ public partial class Louse
 		else if (IsPlayer)
 		{
 			if (target) target.HidePrompt();
-			lice[Count-1].IsPlayer = true;
+			lice[Count-1].BecomePlayer();
 		}
 
 		Destroy(gameObject);

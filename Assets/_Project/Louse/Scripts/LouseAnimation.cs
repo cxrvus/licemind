@@ -4,16 +4,8 @@ using UnityEngine;
 public partial class Louse
 {
 	Animator animator;
-	void UpdateAnimation()
-	{
-		var animation = State switch
-		{
-			LouseState.Idle => "Idle",
-			LouseState.Walking => "Walk",
-			LouseState.Interacting => target.stats.louseAnimation.name,
-			_ => throw new NotImplementedException(),
-		};
-		
-		animator.Play(animation);
-	}
+
+	void AnimateWalk() => animator.Play("Walk");
+	void AnimateIdle() => animator.Play("Idle");
+	void AnimateInteraction() => animator.Play(target.stats.louseAnimation.name);
 }

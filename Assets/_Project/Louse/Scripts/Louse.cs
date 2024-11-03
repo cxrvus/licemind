@@ -1,26 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum LouseState {
-	Idle, Walking, Interacting
-}
 
 public partial class Louse : MonoBehaviour {
 	static readonly List<Louse> lice = new ();
 	public static int Count { get => lice.Count; }
-
-	LouseState _state;
-	public LouseState State {
-		get => _state;
-		private set
-		{
-			if (_state != value)
-			{
-				_state = value;
-				UpdateAnimation();
-			}
-		}
-	}
+	static int _idIncrementor;
+	public int Id { get; private set; }
 
 	void Awake()
 	{
@@ -31,6 +17,8 @@ public partial class Louse : MonoBehaviour {
 		if(!(animator && antenna && rb)) throw new MissingComponentException();
 		if(!baseStats) throw new MissingReferenceException();
 
+		Id = _idIncrementor;
+		_idIncrementor++;
 		lice.Add(this);
 	}
 
@@ -38,14 +26,9 @@ public partial class Louse : MonoBehaviour {
 	{
 		SetupStats();
 		SetupPlayer();
+		SetupMovement();
 
-		StartCoroutine(SetDirection());
 		StartCoroutine(CheckForInteraction());
 		StartCoroutine(ProcessStats());
-	}
-
-	void FixedUpdate()
-	{
-		Move();
 	}
 }

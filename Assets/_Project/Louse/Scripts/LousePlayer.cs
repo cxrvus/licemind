@@ -7,24 +7,25 @@ public partial class Louse
 
 	public static Louse Player { get; private set; }
 	bool _isPlayer;
-	public bool IsPlayer
+	public bool IsPlayer { get => _isPlayer; }
+	public void BecomePlayer()
 	{
-		set
-		{
-			if (!value) throw new ArgumentOutOfRangeException("Can only set IsPlayer to true");
-			if (Player) Player._isPlayer = false;
-			_isPlayer = true;
-			Player = this;
-			OnSwitchPlayer?.Invoke();
-		}
-		get => _isPlayer;
+		if (npcMovement != null) StopCoroutine(npcMovement);
+		if (Player) Player.BecomeNpc();
+		Player = this;
+		_isPlayer = true;
+		AnimateIdle();
+		OnSwitchPlayer?.Invoke();
+	}
+
+	void BecomeNpc()
+	{
+		npcMovement = Player.StartCoroutine(NpcMovement());
+		_isPlayer = false;
 	}
 
 	void SetupPlayer()
 	{
-		if (!Player) IsPlayer = true;
+		if (!Player) BecomePlayer();
 	}
-
-
-	Vector3 GetPlayerDirection() => new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
 }
