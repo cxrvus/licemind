@@ -14,8 +14,8 @@ public class LouseStats
 	public int DigestionCap { get => @base.digestionCap; }
 	public int Digestion { get => _digestion; set { _digestion = Math.Clamp(value, 0, DigestionCap); UpdateStats(); } }
 
-	// todo: louse size proportional to Age
-	// todo: Speed anti-proportional to Age
+	// idea: louse size proportional to Age
+	// idea: Speed anti-proportional to Age
 	public int Speed { get => @base.speed; }
 	public float UpdateInterval { get => @base.updateInterval; }
 	public float WalkInterval { get => @base.walkInterval; }

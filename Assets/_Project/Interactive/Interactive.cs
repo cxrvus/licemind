@@ -11,7 +11,7 @@ public class Interactive : MonoBehaviour
 	{
 		if (stats)
 		{
-			// todo: make prompt a child to Interactive again, instantiating it on EditorTime instead of RunTime
+			// idea: make prompt a child to Interactive again, instantiating it on EditorTime instead of RunTime
 			var prefab = stats.promptPrefab;
 			if (prefab) prompt = Instantiate(prefab, transform).GetComponent<InteractivePrompt>();
 
