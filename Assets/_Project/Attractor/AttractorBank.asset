@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a9fdf1f1587a373971933084a86e98, type: 3}
+  m_Name: AttractorBank
+  m_EditorClassIdentifier: 
+  pheromone: {fileID: 11400000, guid: 669fbed21aec4efd4825b7c296998925, type: 2}
+  defecation: {fileID: 11400000, guid: 06f6d22658c60ffa4b5d512a9bddc8e8, type: 2}
+  corpse: {fileID: 11400000, guid: 17faf7dc6d5133381bd5fa8117773f21, type: 2}

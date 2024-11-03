@@ -4,9 +4,6 @@ using UnityEngine;
 
 public partial class Louse
 {
-	public GameObject defecationObject;
-	public GameObject corpseObject;
-
 	public LouseBaseStats baseStats;
 	public LouseStats Stats { get; private set; }
 
@@ -27,17 +24,9 @@ public partial class Louse
 		}
 	}
 
-	GameObject SpawnAttractor(GameObject prefab)
-	{
-		var instance = Instantiate(prefab);
-		var position = new Vector3(transform.position.x, transform.position.y, Layers.ATTRACTOR);
-		instance.transform.position = position;
-		return instance;
-	}
-
 	void Defecate()
 	{
-		SpawnAttractor(defecationObject);
+		attractors.defecation.SpawnAt(transform);
 		Stats.Digestion = 0;
 	}
 
@@ -45,7 +34,7 @@ public partial class Louse
 	{
 		lice.Remove(this);
 
-		var corpse = SpawnAttractor(corpseObject);
+		var corpse = attractors.corpse.SpawnAt(transform);
 		corpse.transform.rotation = transform.rotation;
 
 		if (Count == 0) OnGameOver?.Invoke();

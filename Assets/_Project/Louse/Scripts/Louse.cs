@@ -5,6 +5,8 @@ using UnityEngine;
 public enum LState { Idle, Walking, Interacting }
 
 public partial class Louse : MonoBehaviour {
+	public AttractorBank attractors;
+
 	static readonly List<Louse> lice = new ();
 	public static int Count { get => lice.Count; }
 	static int _idIncrementor;
