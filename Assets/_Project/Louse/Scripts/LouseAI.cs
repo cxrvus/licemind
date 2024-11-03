@@ -1,58 +1,69 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class LouseAI
+public partial class Louse
 {
+	Timer walkTimer;
+	Timer interactionTimer;
 
-	readonly Louse l;
-	readonly Timer timer;
-
-	LouseState state;
-
-	public LouseAI(Louse louse)
+	LState _state;
+	public LState State
 	{
-		l = louse;
-		state = LouseState.Idle;
-		timer = new Timer(louse.Stats.WalkInterval, true);
+		get => _state;
+		private set
+		{
+			_state = value;
+			Animate(value);
+		}
+	}
+	LState? nextState;
+
+	void SetupAi()
+	{
+		walkTimer = new Timer(cyclic: true, Stats.WalkInterval);
+		interactionTimer = new Timer(cyclic: true);
 	}
 
-    public void Tick()
+	IEnumerator Loop()
 	{
-		if (l.IsInteracting) return;
-		if (l.IsPlayer) throw new InvalidOperationException();
-
-		timer.Push();
-		if (!timer.Pop()) return;
-
-		var nextState = state;
-
-		if (state == LouseState.Walking)
+		for (;;)
 		{
-			l.Direction = RandomDirection();
-			nextState = LouseState.Idle;
+			Tick();
+			yield return null;
 		}
-		else if (state == LouseState.Idle)
-		{
-			l.IsMoving = false;
-			nextState = LouseState.Walking;
-		}
-		
-		l.Animate(state);
-
-		state = nextState;
 	}
 
-	Vector2 RandomDirection()
+    void Tick()
 	{
-		// todo: attractors
-		var randomDir = Random.onUnitSphere;
-		randomDir.z = 0; // TODO: unneeded?
-		return randomDir;
+		if (State == LState.Interacting)
+		{
+			if (interactionTimer.PopOrPush()) nextState = LState.Idle;
+			else {}
+		}
+		else if (InteractionCheck()) Interact();
+		else if (IsPlayer) PlayerMovement();
+		else NpcMovement();
+
+		if (State != nextState) State = nextState ?? State;
+		nextState = null;
+	}
+
+	void Interact()
+	{
+		nextState = LState.Interacting;
+
+		walkTimer.Reset();
+		interactionTimer.Reset();
+		interactionTimer.Max = target.stats.duration;
+
+		Direction = Zero;
+		Stats.Energy -= target.stats.effort;
+		target.Interact(this);
 	}
 
 	public void Reset()
 	{
-		timer.Reset();
+		walkTimer.Reset();
 	}
 }

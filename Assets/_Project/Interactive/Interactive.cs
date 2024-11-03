@@ -27,13 +27,9 @@ public class Interactive : MonoBehaviour
 	{
 		HidePrompt();
 		durability?.Damage();
-		StartCoroutine(Interaction(louse));
+		OnInteract(louse);
 	}
 
 	public virtual bool CanInteract(Louse louse) => true;
-
-	protected virtual IEnumerator Interaction(Louse louse)
-	{
-		yield return null;
-	}
+	protected virtual void OnInteract(Louse louse) {}
 }

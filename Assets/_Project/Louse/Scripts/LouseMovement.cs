@@ -1,6 +1,6 @@
 using System;
-using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public partial class Louse
 {
@@ -31,21 +31,36 @@ public partial class Louse
 
 	void PlayerMovement()
 	{
-		if (IsInteracting)
-		{
-			IsMoving = false;
-			Animate(LouseState.Interacting);
-			return;
-		}
+		if (State == LState.Interacting) return;
 
 		Direction = GetPlayerDirection();
-		if (IsMoving) Animate(LouseState.Walking);
-		else Animate(LouseState.Idle);
+		nextState = IsMoving ? LState.Walking : LState.Idle;
 	}
 
 	Vector2 GetPlayerDirection() => new (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-	void Move() 
+	void NpcMovement()
+	{
+		if (walkTimer.PopOrPush())
+		{
+			if (State == LState.Walking) nextState = LState.Idle;
+			else if (State == LState.Idle) nextState = LState.Walking;
+		}
+		
+		if (nextState == LState.Walking) Direction = RandomDirection();
+		else if (nextState == LState.Idle) Direction = Zero;
+	}
+
+	Vector2 RandomDirection()
+	{
+		// todo: attractors
+		var randomDir = Random.onUnitSphere;
+		randomDir.z = 0; // fixme: unneeded?
+		return randomDir;
+	}
+
+
+	void ApplyDirection() 
 	{
 		var playerFactor = IsPlayer ? PLAYER_SPEED : 1;
 		rb.linearVelocity = SPEED_FACTOR * playerFactor * baseStats.speed * Time.deltaTime * Direction;

@@ -13,12 +13,15 @@ public partial class Louse
 		if (Player) Player.BecomeNpc();
 		Player = this;
 		_isPlayer = true;
-		ai.Reset();
-		Animate(LouseState.Idle);
+		State = LState.Idle;
 		OnSwitchPlayer?.Invoke();
 	}
 
-	void BecomeNpc() => _isPlayer = false;
+	void BecomeNpc()
+	{
+		_isPlayer = false;
+		State = LState.Idle;
+	}
 
 	void SetupPlayer()
 	{

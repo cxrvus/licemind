@@ -36,7 +36,6 @@ public class LouseStats
 		this.louse = louse;
 		@base = louse.baseStats;
 
-		// SetupStats();
 		Energy = EnergyCap;
 		Louse.OnSwitchPlayer += UpdateStats;
 	}
@@ -44,9 +43,11 @@ public class LouseStats
 	public void Advance()
 	{
 		// idea: instead of this being checked every *Interval*, make it fill up *buckets* and process stats on overflow
-		var depletion = louse.IsPlayer ? louse.IsMoving ? @base.playerMetabolismWalk : @base.playerMetabolismIdle : @base.npcMetabolismIdle;
+		var walking = louse.State == LState.Walking;
+		var interacting = louse.State == LState.Interacting;
+		var depletion = louse.IsPlayer ? walking ? @base.playerMetabolismWalk : @base.playerMetabolismIdle : @base.npcMetabolismIdle;
 		Energy -= depletion;
-		Digestion += louse.IsMoving || louse.IsInteracting ? @base.digestionWork : @base.digestionIdle;
+		Digestion += walking || interacting ? @base.digestionWork : @base.digestionIdle;
 		Age++;
 	}
 }

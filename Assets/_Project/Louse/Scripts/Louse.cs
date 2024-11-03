@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum LouseState { Idle, Walking, Interacting }
+// idea: implement bit flags
+public enum LState { Idle, Walking, Interacting }
 
 public partial class Louse : MonoBehaviour {
 	static readonly List<Louse> lice = new ();
 	public static int Count { get => lice.Count; }
 	static int _idIncrementor;
 	public int Id { get; private set; }
-
-	LouseAI ai;
 
 	void Awake()
 	{
@@ -29,18 +28,12 @@ public partial class Louse : MonoBehaviour {
 	void Start()
 	{
 		SetupStats();
-		ai = new LouseAI(this);
 		SetupPlayer();
+		SetupAi();
 
-		StartCoroutine(CheckForInteraction());
+		StartCoroutine(Loop());
 		StartCoroutine(ProcessStats());
 	}
 
-	void Update()
-	{
-		if (IsPlayer) PlayerMovement();
-		else ai.Tick();
-	}
-
-	void FixedUpdate() => Move();
+	void FixedUpdate() => ApplyDirection();
 }
