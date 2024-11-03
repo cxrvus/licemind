@@ -739,11 +739,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 750151613110007627, guid: 8b7052c2a4944d4ad9980f140d203c93, type: 3}
   m_PrefabInstance: {fileID: 7814793658618474459}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &519420031 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 5752476993588604372, guid: 7ec26b1f279f046398dfccb22aaa690c, type: 3}
-  m_PrefabInstance: {fileID: 7267251581930573776}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &560748026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1780,10 +1775,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 5169427472244348213, guid: 1d936769cadc4d997b844c8691c845fa, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 519420031}
     - target: {fileID: 5890196166997617230, guid: 1d936769cadc4d997b844c8691c845fa, type: 3}
       propertyPath: m_Pivot.x
       value: 0

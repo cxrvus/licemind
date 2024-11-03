@@ -40,9 +40,9 @@ public class LouseStats
 		Louse.OnSwitchPlayer += UpdateStats;
 	}
 
-	public void Advance()
+	public void PassiveUpdate()
 	{
-		// idea: instead of this being checked every *Interval*, make it fill up *buckets* and process stats on overflow
+		// todo: use Timers
 		var walking = louse.State == LState.Walking;
 		var interacting = louse.State == LState.Interacting;
 		var depletion = louse.IsPlayer ? walking ? @base.playerMetabolismWalk : @base.playerMetabolismIdle : @base.npcMetabolismIdle;

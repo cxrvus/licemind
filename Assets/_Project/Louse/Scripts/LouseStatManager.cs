@@ -18,7 +18,7 @@ public partial class Louse
 	{
 		for(;;)
 		{
-			Stats.Advance();
+			Stats.PassiveUpdate();
 			if (Stats.Energy == 0 || Stats.Age >= Stats.AgeCap) Die();
 			else if (Stats.Digestion >= Stats.DigestionCap) Defecate();
 			// todo: add stat indicators (icons that blink proportional to urgency)
