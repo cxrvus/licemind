@@ -41,6 +41,7 @@ public partial class Louse
 		else if (IsPlayer) PlayerTick();
 		else NpcMovement();
 
+		// todo: remove the need for State|nextState distinction
 		if (State != nextState) State = nextState ?? State;
 		nextState = null;
 	}
