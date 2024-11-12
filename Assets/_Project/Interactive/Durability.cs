@@ -10,7 +10,7 @@ public class Durability
 	public SpriteRenderer Sprite { get; private set; }
 
 	int _value;
-	public int Value { get => _value; private set => _value = Math.Clamp(value, 0, valueCap); }
+	public int Value { get => _value; set => _value = Math.Clamp(value, 0, valueCap); }
 
 	public Durability(GameObject gameObject, int valueCap, float minTransp)
 	{
