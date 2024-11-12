@@ -18,18 +18,18 @@ public class Timer
 
 	public bool IsRunning { get; private set; }
 
-	public readonly bool cyclic;
+	public readonly bool cyclical;
 
-	public Timer(bool cyclic, float max = 0)
+	public Timer(bool cyclical, float max = 0)
 	{
-		this.cyclic = cyclic;
+		this.cyclical = cyclical;
 		Max = max;
 	}
 
 	void Tick()
 	{
 		Elapsed += Time.deltaTime;
-		if (IsFinished && !cyclic) Pause();
+		if (IsFinished && !cyclical) Pause();
 	}
 
 	public void Resume()
@@ -47,7 +47,7 @@ public class Timer
 
 	public void Reset()
 	{
-		if (!cyclic) Pause();
-		Elapsed = cyclic ? Elapsed % Max : 0;
+		if (!cyclical) Pause();
+		Elapsed = cyclical ? Elapsed % Max : 0;
 	}
 }
