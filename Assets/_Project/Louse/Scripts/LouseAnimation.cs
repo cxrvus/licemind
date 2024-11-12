@@ -11,7 +11,7 @@ public partial class Louse
 		{
 			LState.Idle => "Idle",
 			LState.Walking => "Walk",
-			LState.Interacting => target.stats.louseAnimation.name,
+			LState.Interacting => target.Stats.louseAnimation.name,
 			_ => throw new NotImplementedException()
 		};
 

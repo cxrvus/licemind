@@ -6,7 +6,7 @@ public partial class Louse
 	Transform antenna;
 	Interactive target;
 	
-	bool CanInteract { get => Stats.Energy > target.stats.effort && target.CanInteract(this); }
+	bool CanInteract { get => Stats.Energy > target.Stats.effort && target.CanInteract(this); }
 	bool ShouldInteract { get => !IsPlayer || Input.GetKey(KeyCode.E); }
 
 	bool InteractionCheck()

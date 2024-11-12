@@ -3,20 +3,22 @@ using UnityEngine;
 
 public class Interactive : MonoBehaviour
 {
-	public InteractiveStats stats;
+	[SerializeField] private InteractiveStats stats;
+	public InteractiveStats Stats { get => stats; }
+
 	protected Durability durability;
 	InteractivePrompt prompt;
 
 	void Start()
 	{
-		if (stats)
+		if (Stats)
 		{
 			// idea: make prompt a child to Interactive again, instantiating it on EditorTime instead of RunTime
-			var prefab = stats.promptPrefab;
+			var prefab = Stats.promptPrefab;
 			if (prefab) prompt = Instantiate(prefab, transform).GetComponent<InteractivePrompt>();
 
-			var durabilityValue = stats.durability;
-			if (durabilityValue > 0) durability = new Durability(gameObject, durabilityValue, stats.minTransparency);
+			var durabilityValue = Stats.durability;
+			if (durabilityValue > 0) durability = new Durability(gameObject, durabilityValue, Stats.minTransparency);
 		}
 	}
 

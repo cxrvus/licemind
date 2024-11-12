@@ -69,11 +69,11 @@ public partial class Louse
 
 		if (!IsPlayer) walkCycle.Pause();
 		interactionCooldown.Reset();
-		interactionCooldown.Max = target.stats.duration;
+		interactionCooldown.Max = target.Stats.duration;
 		interactionCooldown.Resume();
 
 		Direction = Zero;
-		Stats.Energy -= target.stats.effort;
+		Stats.Energy -= target.Stats.effort;
 		target.Interact(this);
 	}
 }
