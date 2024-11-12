@@ -71,9 +71,4 @@ public partial class Louse
 		Stats.Energy -= target.Stats.effort;
 		target.Interact(this);
 	}
-
-	void ResetAi()
-	{
-
-	}
 }
