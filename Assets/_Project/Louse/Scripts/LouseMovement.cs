@@ -48,16 +48,14 @@ public partial class Louse
 			else if (State == LState.Idle) nextState = LState.Walking;
 		}
 		
-		if (nextState == LState.Walking) Direction = RandomDirection();
+		// todo: attractors
+		if (nextState == LState.Walking) Direction = NpcDirection();
 		else if (nextState == LState.Idle) Direction = Zero;
 	}
 
-	Vector2 RandomDirection()
+	Vector2 NpcDirection()
 	{
-		// todo: attractors
-		var randomDir = Random.onUnitSphere;
-		randomDir.z = 0; // fixme: unneeded?
-		return randomDir;
+		return Random.onUnitSphere;;
 	}
 
 
