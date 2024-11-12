@@ -14,7 +14,7 @@ public class Timer
 		}
 	}
 	public float Elapsed { get; private set; }
-	public bool Finished  { get => Elapsed >= Max; }
+	public bool IsFinished { get => Elapsed >= Max; }
 
 	public bool IsRunning { get; private set; }
 
@@ -24,32 +24,30 @@ public class Timer
 	{
 		this.cyclic = cyclic;
 		Max = max;
-		Resume();
 	}
 
 	void Tick()
 	{
 		Elapsed += Time.deltaTime;
-		if (Finished && !cyclic) IsRunning = false;
+		if (IsFinished && !cyclic) Pause();
 	}
 
-	void Resume()
+	public void Resume()
 	{
-		// todo: throw if Clock is not running
+		if (!Clock.IsRunning) throw new InvalidOperationException();
 		Clock.OnTick += Tick;
 		IsRunning = true;
 	}
 
-	void Pause()
+	public void Pause()
 	{
 		Clock.OnTick -= Tick;
 		IsRunning = false;
 	}
 
-	public bool ResetIfFinished()
+	public void Reset()
 	{
-		if (Finished) Reset();
-		return Finished;
+		if (!cyclic) Pause();
+		Elapsed = cyclic ? Elapsed % Max : 0;
 	}
-	public void Reset() => Elapsed = cyclic ? Elapsed % Max : 0;
 }

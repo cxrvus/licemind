@@ -4,8 +4,8 @@ using UnityEngine;
 
 public partial class Louse
 {
-	Timer walkTimer;
-	Timer interactionTimer;
+	Timer walkCycle;
+	Timer interactionCooldown;
 	Timer pheromoneCooldown;
 
 	LState _state;
@@ -22,15 +22,20 @@ public partial class Louse
 
 	IEnumerator Loop()
 	{
-		walkTimer = new Timer(true, Stats.WalkInterval);
-		interactionTimer = new Timer(false);
+		walkCycle = new Timer(true, Stats.WalkInterval);
+		interactionCooldown = new Timer(false);
 		pheromoneCooldown = new Timer(false, 1);
 
 		for (;;)
 		{
 			if (State == LState.Interacting)
 			{
-				if (interactionTimer.ResetIfFinished()) nextState = LState.Idle;
+				if (interactionCooldown.IsFinished)
+				{
+					nextState = LState.Idle;
+					walkCycle.Reset();
+					walkCycle.Resume();
+				}
 			}
 			else if (InteractionCheck()) Interact();
 			else if (IsPlayer) PlayerTick();
@@ -46,13 +51,10 @@ public partial class Louse
 	void PlayerTick()
 	{
 		// todo: add cost
-		// todo: LouseBaseStat for cost and cool-down duration
-		// TODO: implement using Timer.IsRunning (2x)
-		if (pheromoneCooldown.Elapsed > 0) pheromoneCooldown.ResetIfFinished();
-		else if (Input.GetKey(KeyCode.Q))
+		// todo: SO-field for cost and cool-down duration
+		if (pheromoneCooldown.IsFinished && Input.GetKey(KeyCode.Q))
 		{
 			attractors.pheromone.SpawnAt(transform);
-			pheromoneCooldown.Tick();
 		}
 
 		PlayerMovement();
@@ -62,9 +64,10 @@ public partial class Louse
 	{
 		nextState = LState.Interacting;
 
-		walkTimer.Reset();
-		interactionTimer.Reset();
-		interactionTimer.Max = target.stats.duration;
+		walkCycle.Pause();
+		interactionCooldown.Reset();
+		interactionCooldown.Max = target.stats.duration;
+		interactionCooldown.Resume();
 
 		Direction = Zero;
 		Stats.Energy -= target.stats.effort;
@@ -73,6 +76,6 @@ public partial class Louse
 
 	public void Reset()
 	{
-		walkTimer.Reset();
+		walkCycle.Reset();
 	}
 }
