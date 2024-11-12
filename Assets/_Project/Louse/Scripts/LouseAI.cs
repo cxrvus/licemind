@@ -50,9 +50,10 @@ public partial class Louse
 	{
 		// todo: add cost
 		// todo: SO-field for cost and cool-down duration
-		if (pheromoneCooldown.IsFinished && Input.GetKey(KeyCode.Q))
+		if (!pheromoneCooldown.IsRunning && Input.GetKey(KeyCode.Q))
 		{
 			attractors.pheromone.SpawnAt(transform);
+			pheromoneCooldown.Reset().Resume();
 		}
 
 		PlayerMovement();
