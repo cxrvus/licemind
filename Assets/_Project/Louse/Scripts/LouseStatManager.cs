@@ -4,6 +4,8 @@ using UnityEngine;
 
 public partial class Louse
 {
+	public BloodOverlay bloodOverlay;
+
 	public LouseBaseStats baseStats;
 	public LouseStats Stats { get; private set; }
 
@@ -16,6 +18,9 @@ public partial class Louse
 		for(;;)
 		{
 			Stats.PassiveUpdate();
+
+			bloodOverlay.UpdateTransp();
+
 			if (Stats.Energy == 0 || Stats.Age >= Stats.AgeCap) Die();
 			else if (Stats.Digestion >= Stats.DigestionCap) Defecate();
 			// todo: add stat indicators (icons that blink proportional to urgency)

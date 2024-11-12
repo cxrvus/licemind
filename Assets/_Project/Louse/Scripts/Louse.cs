@@ -15,10 +15,13 @@ public partial class Louse : MonoBehaviour {
 	void Awake()
 	{
 		animator = GetComponent<Animator>();
+		bloodOverlay = GetComponentInChildren<BloodOverlay>();
 		rb = GetComponent<Rigidbody2D>();
 
-		if(!(animator && rb)) throw new MissingComponentException();
+		if(!(animator && bloodOverlay && rb)) throw new MissingComponentException();
 		if(!baseStats) throw new MissingReferenceException();
+
+		SetupStats();
 
 		Id = _idIncrementor;
 		_idIncrementor++;

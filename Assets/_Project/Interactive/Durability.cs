@@ -7,10 +7,20 @@ public class Durability
 	public readonly GameObject gameObject;
 	public readonly int valueCap;
 	public readonly float minTransp;
-	public SpriteRenderer Sprite { get; private set; }
+	public readonly float transpFactor;
+	readonly SpriteRenderer sprite;
 
 	int _value;
-	public int Value { get => _value; set => _value = Math.Clamp(value, 0, valueCap); }
+	public int Value
+	{
+		get => _value;
+		set
+		{
+			_value = Math.Clamp(value, 0, valueCap);
+			SetTransparency();
+			if (Value <= 0) Object.Destroy(gameObject);
+		}
+	}
 
 	public Durability(GameObject gameObject, int valueCap, float minTransp)
 	{
@@ -20,24 +30,22 @@ public class Durability
 		this.valueCap = valueCap;
 		this.minTransp = minTransp;
 
+		transpFactor = 1f - minTransp;
+
 		Value = valueCap;
-		Sprite = gameObject.GetComponent<SpriteRenderer>();
+		sprite = gameObject.GetComponent<SpriteRenderer>();
 	}
 
-	public void Damage(int amount = 1)
-	{
-		Value -= amount;
-		SetTransparency();
-		if (Value <= 0) Object.Destroy(gameObject);
-	}
+	public void Damage(int amount = 1) => Value -= amount;
 
 	void SetTransparency()
 	{
-		var transpFactor = 1f - minTransp;
+		if (!sprite) return;
+
 		var ratio = (float)Value / valueCap * transpFactor + minTransp;
 
-		var color = Sprite.color;
+		var color = sprite.color;
 		color.a = ratio;
-		Sprite.color = color;
+		sprite.color = color;
 	}
 }
