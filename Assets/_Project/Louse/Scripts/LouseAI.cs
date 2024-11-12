@@ -30,7 +30,7 @@ public partial class Louse
 		{
 			if (State == LState.Interacting)
 			{
-				if (interactionTimer.PopOrPush()) nextState = LState.Idle;
+				if (interactionTimer.ResetIfFinished()) nextState = LState.Idle;
 			}
 			else if (InteractionCheck()) Interact();
 			else if (IsPlayer) PlayerTick();
@@ -48,11 +48,11 @@ public partial class Louse
 		// todo: add cost
 		// todo: LouseBaseStat for cost and cool-down duration
 		// TODO: implement using Timer.IsRunning (2x)
-		if (pheromoneCooldown.Elapsed > 0) pheromoneCooldown.PopOrPush();
+		if (pheromoneCooldown.Elapsed > 0) pheromoneCooldown.ResetIfFinished();
 		else if (Input.GetKey(KeyCode.Q))
 		{
 			attractors.pheromone.SpawnAt(transform);
-			pheromoneCooldown.Push();
+			pheromoneCooldown.Tick();
 		}
 
 		PlayerMovement();

@@ -13,6 +13,10 @@ public class Timer
 			_max = value;
 		}
 	}
+	public float Elapsed { get; private set; }
+	public bool Finished  { get => Elapsed >= Max; }
+
+	public bool IsRunning { get; private set; }
 
 	public readonly bool cyclic;
 
@@ -20,36 +24,32 @@ public class Timer
 	{
 		this.cyclic = cyclic;
 		Max = max;
+		Resume();
 	}
 
-	public float Elapsed { get; private set; }
-
-	public void Push() => Push(Time.deltaTime);
-	public void Push(float time)
+	void Tick()
 	{
-		if (Max == 0) throw new InvalidOperationException();
-		Elapsed += time;
-	}
-	public bool Pop()
-	{
-		if (Max == 0) throw new InvalidOperationException();
-		if (Elapsed >= Max)
-		{
-			if (cyclic) Elapsed %= Max;
-			else Reset();
-			return true;
-		}
-		else return false;
+		Elapsed += Time.deltaTime;
+		if (Finished && !cyclic) IsRunning = false;
 	}
 
-	// TODO: add IsRunning and automatically increment Timer using Coroutine
-	// => methods: Start, Stop, Reset, Pop (= IsFinished && Reset)
-	// => properties: IsRunning, IsFinished
-	public bool PopOrPush()
+	void Resume()
 	{
-		if (Pop()) return true;
-		else Push();
-		return false;
+		// todo: throw if Clock is not running
+		Clock.OnTick += Tick;
+		IsRunning = true;
 	}
-	public void Reset() => Elapsed = 0;
+
+	void Pause()
+	{
+		Clock.OnTick -= Tick;
+		IsRunning = false;
+	}
+
+	public bool ResetIfFinished()
+	{
+		if (Finished) Reset();
+		return Finished;
+	}
+	public void Reset() => Elapsed = cyclic ? Elapsed % Max : 0;
 }
