@@ -33,8 +33,11 @@ public partial class Louse
 				if (interactionCooldown.IsFinished)
 				{
 					nextState = LState.Idle;
-					walkCycle.Reset();
-					walkCycle.Resume();
+					if (!IsPlayer)
+					{
+						walkCycle.Reset();
+						walkCycle.Resume();
+					}
 				}
 			}
 			else if (InteractionCheck()) Interact();
@@ -64,7 +67,7 @@ public partial class Louse
 	{
 		nextState = LState.Interacting;
 
-		walkCycle.Pause();
+		if (!IsPlayer) walkCycle.Pause();
 		interactionCooldown.Reset();
 		interactionCooldown.Max = target.stats.duration;
 		interactionCooldown.Resume();
@@ -72,10 +75,5 @@ public partial class Louse
 		Direction = Zero;
 		Stats.Energy -= target.stats.effort;
 		target.Interact(this);
-	}
-
-	public void Reset()
-	{
-		walkCycle.Reset();
 	}
 }
