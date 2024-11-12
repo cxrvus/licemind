@@ -41,7 +41,6 @@ public partial class Louse
 
 	void NpcMovement()
 	{
-		if (!walkCycle.IsRunning) walkCycle.Resume();
 		if (walkCycle.IsFinished)
 		{
 			walkCycle.Reset();

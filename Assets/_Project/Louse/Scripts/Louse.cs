@@ -30,11 +30,14 @@ public partial class Louse : MonoBehaviour {
 	void Start()
 	{
 		SetupStats();
+		SetupAI();
 		SetupPlayer();
 
-		StartCoroutine(Loop());
+		// todo: implement using timers
 		StartCoroutine(ProcessStats());
 	}
+
+	void Update() => Tick();
 
 	void FixedUpdate() => ApplyDirection();
 }

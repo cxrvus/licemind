@@ -47,9 +47,10 @@ public class Timer
 		IsRunning = false;
 	}
 
-	public void Reset()
+	public Timer Reset()
 	{
 		if (!cyclical && IsRunning) Pause();
 		Elapsed = cyclical ? Elapsed % Max : 0;
+		return this;
 	}
 }

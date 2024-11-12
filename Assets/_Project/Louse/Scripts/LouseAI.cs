@@ -20,35 +20,29 @@ public partial class Louse
 	}
 	LState? nextState;
 
-	IEnumerator Loop()
+	void SetupAI()
 	{
 		walkCycle = new Timer(true, Stats.WalkInterval);
 		interactionCooldown = new Timer(false);
 		pheromoneCooldown = new Timer(false, 1);
+	}
 
-		for (;;)
+	void Tick()
+	{
+		if (State == LState.Interacting)
 		{
-			if (State == LState.Interacting)
+			if (interactionCooldown.IsFinished)
 			{
-				if (interactionCooldown.IsFinished)
-				{
-					nextState = LState.Idle;
-					if (!IsPlayer)
-					{
-						walkCycle.Reset();
-						walkCycle.Resume();
-					}
-				}
+				nextState = LState.Idle;
+				if (!IsPlayer) walkCycle.Reset().Resume();
 			}
-			else if (InteractionCheck()) Interact();
-			else if (IsPlayer) PlayerTick();
-			else NpcMovement();
-
-			if (State != nextState) State = nextState ?? State;
-			nextState = null;
-
-			yield return null;
 		}
+		else if (InteractionCheck()) Interact();
+		else if (IsPlayer) PlayerTick();
+		else NpcMovement();
+
+		if (State != nextState) State = nextState ?? State;
+		nextState = null;
 	}
 
 	void PlayerTick()
@@ -75,5 +69,10 @@ public partial class Louse
 		Direction = Zero;
 		Stats.Energy -= target.Stats.effort;
 		target.Interact(this);
+	}
+
+	void ResetAi()
+	{
+
 	}
 }
