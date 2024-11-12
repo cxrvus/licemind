@@ -15,10 +15,9 @@ public partial class Louse : MonoBehaviour {
 	void Awake()
 	{
 		animator = GetComponent<Animator>();
-		antenna = transform.GetChild(0);
 		rb = GetComponent<Rigidbody2D>();
 
-		if(!(animator && antenna && rb)) throw new MissingComponentException();
+		if(!(animator && rb)) throw new MissingComponentException();
 		if(!baseStats) throw new MissingReferenceException();
 
 		Id = _idIncrementor;

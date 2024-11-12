@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateInterval: 1
   walkInterval: 0.5
+  interactionDistance: 0.5
   energyCap: 99
   npcMetabolismIdle: 1
   playerMetabolismIdle: 2

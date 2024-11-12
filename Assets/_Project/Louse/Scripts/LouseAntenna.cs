@@ -3,7 +3,6 @@ using UnityEngine;
 
 public partial class Louse
 {
-	Transform antenna;
 	Interactive target;
 	
 	bool CanInteract { get => Stats.Energy > target.Stats.effort && target.CanInteract(this); }
@@ -11,8 +10,11 @@ public partial class Louse
 
 	bool InteractionCheck()
 	{
-		var rayDirection = (antenna.rotation * Vector2.up).normalized;
-		var hitCollider = Physics2D.Raycast(antenna.position, rayDirection, 0.5f).collider;
+		var rayDirection = (transform.rotation * Vector2.up).normalized;
+		var rayPosition = transform.position + rayDirection * 0.5f;
+		var rayDistance = baseStats.interactionDistance;
+
+		var hitCollider = Physics2D.Raycast(rayPosition, rayDirection, rayDistance).collider;
 		var newTarget = !hitCollider ? null : hitCollider.GetComponent<Interactive>();
 
 		if (target && target != newTarget) target.HidePrompt();

@@ -6,6 +6,8 @@ public class LouseBaseStats : ScriptableObject
 	public float updateInterval;
 	public float walkInterval;
 
+	public float interactionDistance;
+
 	public int energyCap;
 
 	public int npcMetabolismIdle;
