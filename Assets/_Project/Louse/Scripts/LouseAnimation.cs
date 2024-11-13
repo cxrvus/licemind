@@ -12,9 +12,9 @@ public partial class Louse
 			LState.Idle => "Idle",
 			LState.Walking => "Walk",
 			LState.Interacting => target.Stats.louseAnimation.name,
-			_ => throw new NotImplementedException()
+			_ => null
 		};
 
-		animator.Play(animation);
+		if (animation is not null) animator.Play(animation);
 	}
 }
