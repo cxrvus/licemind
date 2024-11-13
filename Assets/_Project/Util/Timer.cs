@@ -3,16 +3,7 @@ using UnityEngine;
 
 public class Timer
 {
-	float _max;
-	public float Max
-	{
-		get => _max;
-		set
-		{
-			if (value < 0) throw new ArgumentOutOfRangeException("max value must not be less than 0");
-			_max = value;
-		}
-	}
+	public float Max { get; private set; }
 	public float Elapsed { get; private set; }
 	public bool IsFinished { get => Elapsed >= Max; }
 
@@ -45,6 +36,13 @@ public class Timer
 		if (!IsRunning) throw new InvalidOperationException("cannot pause a timer that is already paused");
 		Clock.OnTick -= Tick;
 		IsRunning = false;
+	}
+
+	public Timer Reset(float max)
+	{
+		if (max < 0) throw new ArgumentOutOfRangeException("max value must not be less than 0");
+		Max = max;
+		return Reset();
 	}
 
 	public Timer Reset()

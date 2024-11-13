@@ -64,9 +64,7 @@ public partial class Louse
 		nextState = LState.Interacting;
 
 		if (!IsPlayer) walkCycle.Pause();
-		interactionCooldown.Reset();
-		interactionCooldown.Max = target.Stats.duration;
-		interactionCooldown.Resume();
+		interactionCooldown.Reset(target.Stats.duration).Resume();
 
 		Direction = Zero;
 		Stats.Energy -= target.Stats.effort;
