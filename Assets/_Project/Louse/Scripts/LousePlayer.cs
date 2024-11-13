@@ -13,7 +13,7 @@ public partial class Louse
 		if (Player) Player.BecomeNpc();
 		Player = this;
 		_isPlayer = true;
-		nextState = LState.Idle;
+		State = LState.Idle;
 		if (walkCycle.IsRunning) walkCycle.Pause();
 		OnSwitchPlayer?.Invoke();
 	}
@@ -21,7 +21,7 @@ public partial class Louse
 	void BecomeNpc()
 	{
 		_isPlayer = false;
-		nextState = LState.Idle;
+		State = LState.Idle;
 		interactionCooldown.Reset();
 		walkCycle.Reset().Resume();
 	}

@@ -18,7 +18,6 @@ public partial class Louse
 			Animate(value);
 		}
 	}
-	LState? nextState;
 
 	void SetupAI()
 	{
@@ -33,17 +32,13 @@ public partial class Louse
 		{
 			if (interactionCooldown.IsFinished)
 			{
-				nextState = LState.Idle;
+				State = LState.Idle;
 				if (!IsPlayer) walkCycle.Reset().Resume();
 			}
 		}
 		else if (InteractionCheck()) Interact();
 		else if (IsPlayer) PlayerTick();
 		else NpcMovement();
-
-		// todo: remove the need for State|nextState distinction
-		if (State != nextState) State = nextState ?? State;
-		nextState = null;
 	}
 
 	void PlayerTick()
@@ -61,7 +56,7 @@ public partial class Louse
 
 	void Interact()
 	{
-		nextState = LState.Interacting;
+		State = LState.Interacting;
 
 		if (!IsPlayer) walkCycle.Pause();
 		interactionCooldown.Reset(target.Stats.duration).Resume();

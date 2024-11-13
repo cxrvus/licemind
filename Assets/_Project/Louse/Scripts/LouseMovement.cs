@@ -34,23 +34,29 @@ public partial class Louse
 		if (State == LState.Interacting) return;
 
 		Direction = GetPlayerDirection();
-		nextState = IsMoving ? LState.Walking : LState.Idle;
+		State = IsMoving ? LState.Walking : LState.Idle;
 	}
 
 	Vector2 GetPlayerDirection() => new (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
 	void NpcMovement()
 	{
+		// todo: attractors
+
 		if (walkCycle.IsFinished)
 		{
+			if (State == LState.Walking)
+			{
+				State = LState.Idle;
+				Direction = Zero;
+			}
+			else if (State == LState.Idle) 
+			{
+				Direction = NpcDirection();
+				State = LState.Walking;
+			}
 			walkCycle.Reset();
-			if (State == LState.Walking) nextState = LState.Idle;
-			else if (State == LState.Idle) nextState = LState.Walking;
 		}
-		
-		// todo: attractors
-		if (nextState == LState.Walking) Direction = NpcDirection();
-		else if (nextState == LState.Idle) Direction = Zero;
 	}
 
 	Vector2 NpcDirection()
