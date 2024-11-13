@@ -15,3 +15,4 @@ MonoBehaviour:
   pheromone: {fileID: 11400000, guid: 669fbed21aec4efd4825b7c296998925, type: 2}
   defecation: {fileID: 11400000, guid: 06f6d22658c60ffa4b5d512a9bddc8e8, type: 2}
   corpse: {fileID: 11400000, guid: 17faf7dc6d5133381bd5fa8117773f21, type: 2}
+  prefab: {fileID: 2592612065042763125, guid: db7aeb7dc8482b1589b355346a637a84, type: 3}

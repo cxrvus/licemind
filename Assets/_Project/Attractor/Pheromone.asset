@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Pheromone
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: f8131bb612b61a2159bd167bcf0c6116, type: 3}
-  auraColor: {r: 0, g: 0.6179539, b: 0.009421125, a: 0}
+  auraColor: {r: 0, g: 0.5771657, b: 0.014879036, a: 0.5019608}
   attraction: 1
   maxRadius: 4
-  minRadius: 2
-  decayRate: 0.2
+  minRadius: 1
+  decayRate: 0.5

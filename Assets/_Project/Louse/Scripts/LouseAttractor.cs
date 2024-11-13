@@ -4,16 +4,14 @@ public partial class Louse
 {
 	public AttractorBank attractors;
 
-	public GameObject Spawn(AttractorStats attractor)
+	public GameObject Spawn(AttractorStats attractorStats)
 	{
-		var sprite = attractor.sprite;
 		var instance = Instantiate(attractors.prefab);
+
 		var position = new Vector3(transform.position.x, transform.position.y, Layers.ATTRACTOR);
-
 		instance.transform.position = position;
-		instance.GetComponent<SpriteRenderer>().sprite = sprite;
-		instance.name = sprite.name;
 
+		instance.GetComponentInChildren<Attractor>().stats = attractorStats;
 		return instance;
 	}
 }
