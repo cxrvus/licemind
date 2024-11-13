@@ -55,9 +55,8 @@ public partial class Louse
 
 	Vector2 NpcDirection()
 	{
-		return Random.onUnitSphere;;
+		return Random.onUnitSphere;
 	}
-
 
 	void ApplyDirection() 
 	{

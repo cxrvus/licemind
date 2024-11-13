@@ -1,3 +1,2 @@
 - todo: implement attractor decay & regeneration
-- todo: add pheromone
 - idea: different sizes (can increase size by holding Q, spending more energy)
