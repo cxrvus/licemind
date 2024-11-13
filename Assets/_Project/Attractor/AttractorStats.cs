@@ -18,6 +18,7 @@ public class AttractorStats : ScriptableObject
 		var spriteRenderer = instance.AddComponent<SpriteRenderer>();
 		spriteRenderer.sprite = sprite;
 
+		instance.name = sprite.name;
 		return instance;
 	}
 }
