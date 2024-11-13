@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Corpse
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 037292fe7133f61eaa2183e75314f84f, type: 3}
+  auraColor: {r: 0.6651237, g: 0.2, b: 0.2, a: 0}
   attraction: -1.2
   maxRadius: 3
   minRadius: 0

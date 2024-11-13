@@ -24,14 +24,13 @@ public partial class Louse
 			if (Stats.Energy == 0 || Stats.Age >= Stats.AgeCap) Die();
 			else if (Stats.Digestion >= Stats.DigestionCap) Defecate();
 			// todo: add stat indicators (icons that blink proportional to urgency)
-			// todo: implement blood layer transparency
 			yield return new WaitForSeconds(Stats.UpdateInterval);
 		}
 	}
 
 	void Defecate()
 	{
-		attractors.defecation.SpawnAt(transform);
+		Spawn(attractors.defecation);
 		Stats.Digestion = 0;
 	}
 
@@ -39,7 +38,7 @@ public partial class Louse
 	{
 		lice.Remove(this);
 
-		var corpse = attractors.corpse.SpawnAt(transform);
+		var corpse = Spawn(attractors.corpse);
 		corpse.transform.rotation = transform.rotation;
 
 		if (Count == 0) OnGameOver?.Invoke();

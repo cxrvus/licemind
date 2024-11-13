@@ -6,4 +6,5 @@ public class AttractorBank : ScriptableObject
 	public AttractorStats pheromone;
 	public AttractorStats defecation;
 	public AttractorStats corpse;
+	public GameObject prefab;
 }
