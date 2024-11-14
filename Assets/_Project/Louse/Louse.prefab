@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15819e304dd969938e424894d1e923f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attractors: {fileID: 11400000, guid: f8b937b298368a266a903247e2b577c5, type: 2}
+  attractorBank: {fileID: 11400000, guid: f8b937b298368a266a903247e2b577c5, type: 2}
   baseStats: {fileID: 11400000, guid: bdc53372fed9488f997c8c3bb87a1bb9, type: 2}
 --- !u!114 &7028392551882497264
 MonoBehaviour:

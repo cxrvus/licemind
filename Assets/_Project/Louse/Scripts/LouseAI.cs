@@ -47,7 +47,7 @@ public partial class Louse
 		// todo: SO-field for cost and cool-down duration
 		if (!pheromoneCooldown.IsRunning && Input.GetKey(KeyCode.Q))
 		{
-			Spawn(attractors.pheromone);
+			Spawn(attractorBank.pheromone);
 			pheromoneCooldown.Reset().Resume();
 		}
 

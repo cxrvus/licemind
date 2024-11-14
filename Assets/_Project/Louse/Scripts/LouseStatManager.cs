@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class Louse
 {
-	public BloodOverlay bloodOverlay;
+	BloodOverlay bloodOverlay;
 
 	public LouseBaseStats baseStats;
 	public LouseStats Stats { get; private set; }
@@ -30,7 +30,7 @@ public partial class Louse
 
 	void Defecate()
 	{
-		Spawn(attractors.defecation);
+		Spawn(attractorBank.defecation);
 		Stats.Digestion = 0;
 	}
 
@@ -38,7 +38,7 @@ public partial class Louse
 	{
 		lice.Remove(this);
 
-		var corpse = Spawn(attractors.corpse);
+		var corpse = Spawn(attractorBank.corpse);
 		corpse.transform.rotation = transform.rotation;
 
 		if (Count == 0) OnGameOver?.Invoke();
