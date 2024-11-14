@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Louse
@@ -14,4 +15,19 @@ public partial class Louse
 		instance.GetComponentInChildren<Attractor>().stats = attractorStats;
 		return instance;
 	}
+
+	readonly List<Attractor> nearbyAttractors = new();
+
+	void EditNearbyAttractors(Collider2D collider, bool add)
+	{
+		var attractor = collider.GetComponentInParent<Attractor>();
+		if (!IsPlayer && attractor)
+		{
+			if (add) nearbyAttractors.Add(attractor);
+			else nearbyAttractors.Remove(attractor);
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D collider) => EditNearbyAttractors(collider, true);
+	void OnTriggerExit2D(Collider2D collider) => EditNearbyAttractors(collider, false);
 }

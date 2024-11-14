@@ -41,8 +41,6 @@ public partial class Louse
 
 	void NpcMovement()
 	{
-		// todo: attractors
-
 		if (walkCycle.IsFinished)
 		{
 			if (State == LState.Walking)
@@ -61,7 +59,18 @@ public partial class Louse
 
 	Vector2 NpcDirection()
 	{
-		return Random.onUnitSphere;
+		Vector2 directionSum = Random.onUnitSphere;
+
+		for (var i = 0; i < nearbyAttractors.Count; i++)
+		{
+			var attractor = nearbyAttractors[i];
+			Vector2 direction = transform.position - attractor.transform.position;
+
+			if (direction.magnitude <= attractor.stats.minRadius) continue;
+			else directionSum += attractor.stats.attraction * -attractor.Radius * direction.normalized;
+		}
+
+		return directionSum;
 	}
 
 	void ApplyDirection() 
