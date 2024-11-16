@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// todo: implement Interactives via interface implementation instead of inheritance
 public class Interactive : MonoBehaviour
 {
 	[SerializeField] private InteractiveStats stats;

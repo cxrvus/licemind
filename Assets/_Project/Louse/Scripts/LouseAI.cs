@@ -43,7 +43,6 @@ public partial class Louse
 
 	void PlayerTick()
 	{
-		// todo: add cost
 		// todo: SO-field for cost and cool-down duration
 		if (!pheromoneCooldown.IsRunning && Input.GetKey(KeyCode.Q))
 		{
